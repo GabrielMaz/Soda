@@ -4,6 +4,7 @@ import android.app.Activity
 import android.app.Application
 import android.content.Intent
 import android.os.Bundle
+import com.gabrielmaz.soda.views.MainActivity
 import java.lang.ref.WeakReference
 
 class App : Application() {
