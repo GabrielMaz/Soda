@@ -1,0 +1,73 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="vertical">
+
+    <androidx.cardview.widget.CardView
+        android:id="@+id/item_discover_card"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_margin="10dp"
+        android:background="@color/colorAccent">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@color/colorAccent"
+            android:gravity="center"
+            android:orientation="vertical"
+            android:padding="10dp">
+
+            <ImageView
+                android:id="@+id/item_discover_image"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content" />
+
+            <TextView
+                android:id="@+id/item_discover_title"
+                style="@style/TextViewStyle.MovieTitle"
+                android:background="@color/colorAccent"
+                android:ellipsize="end"
+                android:gravity="center_vertical"
+                android:lines="3"
+                android:textSize="20sp"
+                tools:text="Spider-Man Far from Home" />
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="10dp"
+                android:background="@color/colorAccent"
+                android:orientation="horizontal">
+
+                <TextView
+                    android:id="@+id/item_discover_year"
+                    style="@style/TextViewStyle"
+                    android:layout_weight="1"
+                    android:background="@color/colorAccent"
+                    tools:text="2010" />
+
+                <ImageView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    android:background="@color/colorAccent"
+                    android:src="@drawable/ic_star_golden" />
+
+                <TextView
+                    android:id="@+id/item_discover_rate"
+                    style="@style/TextViewStyle.Rate"
+                    android:layout_gravity="center"
+                    android:background="@color/colorAccent"
+                    android:textStyle="bold"
+                    tools:text="7.4" />
+
+            </LinearLayout>
+
+        </LinearLayout>
+
+    </androidx.cardview.widget.CardView>
+
+</LinearLayout>

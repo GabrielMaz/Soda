@@ -1,0 +1,120 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:paddingStart="@dimen/horizontal_margin"
+    android:paddingEnd="@dimen/horizontal_margin"
+    android:orientation="vertical"
+    tools:context=".views.movie.MovieDetailFragment">
+
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <ImageView
+                android:id="@+id/movie_image"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerHorizontal="true"
+                android:layout_marginStart="30dp"
+                android:layout_marginTop="30dp"
+                android:layout_marginEnd="30dp"
+                android:src="@mipmap/ic_launcher" />
+
+            <TextView
+                android:id="@+id/movie_title"
+                style="@style/TextViewStyle.MovieTitle"
+                android:layout_below="@id/movie_image"
+                android:layout_centerHorizontal="true"
+                android:layout_marginTop="20dp"
+                android:text="Alice in Wonderland"
+                android:textSize="24sp"
+                tools:text="Alice in Wonderland" />
+
+            <TextView
+                android:id="@+id/movie_year"
+                style="@style/TextViewStyle"
+                android:layout_below="@id/movie_title"
+                android:layout_centerHorizontal="true"
+                android:text="1951"
+                tools:text="1951" />
+
+            <ImageView
+                android:id="@+id/movie_rate_image"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/movie_year"
+                android:src="@drawable/ic_star_golden" />
+
+            <TextView
+                android:id="@+id/movie_rate"
+                style="@style/TextViewStyle.Rate"
+                android:layout_below="@id/movie_year"
+                android:layout_alignTop="@id/movie_rate_image"
+                android:layout_alignBottom="@id/movie_rate_image"
+                android:layout_toEndOf="@id/movie_rate_image"
+                android:text="7.4"
+                tools:text="7.4" />
+
+            <TextView
+                android:id="@+id/movie_description"
+                style="@style/TextViewStyle"
+                android:layout_below="@id/movie_rate_image"
+                android:layout_marginTop="5dp"
+                android:layout_marginBottom="5dp"
+                android:text="More than two decades have passed since Sarah Connor prevented Judgment Day, changed the future, and re-wrote the fate of the human race. Dani Ramos is living a simple life in Mexico City with her brother and father when a highly advanced and deadly new Terminator – a Rev-9 – travels back through time to hunt and kill her. Dani's survival depends on her joining forces with two warriors: Grace, an enhanced super-soldier from the future, and a battle-hardened Sarah Connor. As the Rev-9 ruthlessly destroys everything and everyone in its path on the hunt for Dani, the three are led to a T-800 from Sarah’s past that may be their last best hope."
+                tools:text="More than two decades have passed since Sarah Connor prevented Judgment Day, changed the future, and re-wrote the fate of the human race. Dani Ramos is living a simple life in Mexico City with her brother and father when a highly advanced and deadly new Terminator – a Rev-9 – travels back through time to hunt and kill her. Dani's survival depends on her joining forces with two warriors: Grace, an enhanced super-soldier from the future, and a battle-hardened Sarah Connor. As the Rev-9 ruthlessly destroys everything and everyone in its path on the hunt for Dani, the three are led to a T-800 from Sarah’s past that may be their last best hope." />
+
+            <TextView
+                android:id="@+id/movie_director_title"
+                style="@style/TextViewStyle.PeopleTitle"
+                android:layout_below="@id/movie_description"
+                android:text="@string/director" />
+
+            <TextView
+                android:id="@+id/movie_director"
+                style="@style/TextViewStyle.People"
+                android:layout_alignTop="@id/movie_director_title"
+                android:layout_toEndOf="@id/movie_director_title"
+                android:text="Tim Burton"
+                tools:text="Tim Burton" />
+
+            <TextView
+                android:id="@+id/movie_writers_title"
+                style="@style/TextViewStyle.PeopleTitle"
+                android:layout_below="@id/movie_director_title"
+                android:text="@string/writers" />
+
+            <TextView
+                android:id="@+id/movie_writers"
+                style="@style/TextViewStyle.People"
+                android:layout_alignTop="@id/movie_writers_title"
+                android:layout_toEndOf="@id/movie_writers_title"
+                android:text="Tim Burton"
+                tools:text="Tim Burton" />
+
+            <TextView
+                android:id="@+id/movie_stars_title"
+                style="@style/TextViewStyle.PeopleTitle"
+                android:layout_below="@id/movie_writers_title"
+                android:text="@string/stars" />
+
+            <TextView
+                android:id="@+id/movie_stars"
+                style="@style/TextViewStyle.People"
+                android:layout_alignTop="@id/movie_stars_title"
+                android:layout_toEndOf="@id/movie_stars_title"
+                android:text="Tim Burton"
+                tools:text="Tim Burton" />
+
+
+        </RelativeLayout>
+
+    </ScrollView>
+
+</LinearLayout>
