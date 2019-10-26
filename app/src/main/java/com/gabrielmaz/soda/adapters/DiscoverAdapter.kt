@@ -34,6 +34,7 @@ class DiscoverAdapter(
             .with(context)
             .load("${RetrofitController.baseUrl}/${item.posterPath}")
             .centerCrop()
+            .placeholder(R.drawable.ic_place_holder)
             .into(view.item_discover_image)
 
         return view

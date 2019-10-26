@@ -1,25 +1,25 @@
 package com.gabrielmaz.soda.views.discover
 
 import android.content.Context
-import android.net.Uri
 import android.os.Bundle
-import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-
+import androidx.fragment.app.Fragment
 import com.gabrielmaz.soda.R
 import com.gabrielmaz.soda.adapters.DiscoverAdapter
 import com.gabrielmaz.soda.controllers.DiscoverController
 import com.gabrielmaz.soda.helpers.gone
 import com.gabrielmaz.soda.helpers.visible
 import com.gabrielmaz.soda.models.Movie
+import com.github.ybq.android.spinkit.style.DoubleBounce
+import com.github.ybq.android.spinkit.style.Pulse
+import com.github.ybq.android.spinkit.style.Wave
 import kotlinx.android.synthetic.main.fragment_discover.*
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
-import java.lang.Exception
 import kotlin.coroutines.CoroutineContext
 
 class DiscoverFragment : Fragment(), CoroutineScope {
@@ -39,6 +39,8 @@ class DiscoverFragment : Fragment(), CoroutineScope {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+
+        discovers_loading.setIndeterminateDrawable(Wave())
 
         load()
     }
@@ -69,6 +71,7 @@ class DiscoverFragment : Fragment(), CoroutineScope {
                 discovers = discoverController.getDiscovers().results
 
                 withContext(Dispatchers.Main) {
+                    discovers_loading.gone()
                     if (discovers.isNotEmpty()) {
                         discover_grid.visible()
                         discover_emptyview.gone()
@@ -85,6 +88,7 @@ class DiscoverFragment : Fragment(), CoroutineScope {
                 }
             } catch (ex: Exception) {
                 withContext(Dispatchers.Main) {
+                    discovers_loading.gone()
                     println(ex.message)
                 }
             }
