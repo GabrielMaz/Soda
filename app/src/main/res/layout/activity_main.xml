@@ -11,8 +11,10 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_alignParentBottom="true"
+        android:background="@color/yellow"
         android:clickable="false"
-        android:contextClickable="false"
+        app:itemIconTint="@color/selector_bottom_navigation"
+        app:itemTextColor="@color/selector_bottom_navigation"
         app:menu="@menu/menu_home" />
 
     <FrameLayout

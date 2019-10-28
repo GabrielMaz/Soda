@@ -9,6 +9,7 @@ import retrofit2.converter.gson.GsonConverterFactory
 
 object RetrofitController {
     const val baseUrl = "https://api.themoviedb.org/3/"
+    const val baseImageUrl = "https://image.tmdb.org/t/p/w500"
     const val apiKey =
         "6d6e6ac0a910598652be5994ade22a61"
 

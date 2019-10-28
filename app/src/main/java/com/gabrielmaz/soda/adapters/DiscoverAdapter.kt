@@ -14,7 +14,7 @@ import kotlinx.android.synthetic.main.item_discover.view.*
 class DiscoverAdapter(
     private var discovers: ArrayList<Movie>,
     private val context: Context,
-    private var onClick: () -> Unit
+    private var onClick: (Movie) -> Unit
 ) :
     BaseAdapter() {
     override fun getView(position: Int, convertView: View?, parent: ViewGroup?): View {
@@ -27,12 +27,12 @@ class DiscoverAdapter(
         view.item_discover_year.text = item.releaseDate.subSequence(0, 4)
         view.item_discover_rate.text = item.voteAverage.toString()
         view.item_discover_card.setOnClickListener {
-            onClick()
+            onClick(item)
         }
 
         Glide
             .with(context)
-            .load("${RetrofitController.baseUrl}/${item.posterPath}")
+            .load("${RetrofitController.baseImageUrl}${item.posterPath}")
             .centerCrop()
             .placeholder(R.drawable.ic_place_holder)
             .into(view.item_discover_image)

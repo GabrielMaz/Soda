@@ -10,25 +10,25 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_margin="10dp"
-        android:background="@color/colorAccent">
+        android:background="@color/colorPrimaryDark">
 
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:background="@color/colorAccent"
+            android:background="@color/colorPrimaryDark"
             android:gravity="center"
             android:orientation="vertical"
             android:padding="10dp">
 
             <ImageView
                 android:id="@+id/item_discover_image"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content" />
+                android:layout_width="200dp"
+                android:layout_height="300dp" />
 
             <TextView
                 android:id="@+id/item_discover_title"
                 style="@style/TextViewStyle.MovieTitle"
-                android:background="@color/colorAccent"
+                android:background="@color/colorPrimaryDark"
                 android:ellipsize="end"
                 android:gravity="center_vertical"
                 android:lines="3"
@@ -39,28 +39,28 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="10dp"
-                android:background="@color/colorAccent"
+                android:background="@color/colorPrimaryDark"
                 android:orientation="horizontal">
 
                 <TextView
                     android:id="@+id/item_discover_year"
                     style="@style/TextViewStyle"
                     android:layout_weight="1"
-                    android:background="@color/colorAccent"
+                    android:background="@color/colorPrimaryDark"
                     tools:text="2010" />
 
                 <ImageView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_gravity="center"
-                    android:background="@color/colorAccent"
+                    android:background="@color/colorPrimaryDark"
                     android:src="@drawable/ic_star_golden" />
 
                 <TextView
                     android:id="@+id/item_discover_rate"
                     style="@style/TextViewStyle.Rate"
                     android:layout_gravity="center"
-                    android:background="@color/colorAccent"
+                    android:background="@color/colorPrimaryDark"
                     android:textStyle="bold"
                     tools:text="7.4" />
 

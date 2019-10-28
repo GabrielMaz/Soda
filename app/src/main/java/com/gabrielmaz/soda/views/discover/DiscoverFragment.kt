@@ -60,7 +60,7 @@ class DiscoverFragment : Fragment(), CoroutineScope {
     }
 
     interface OnFragmentInteractionListener {
-        fun goToMovieDetails()
+        fun goToMovieDetails(selectedMovie: Movie)
     }
 
     private fun load() {
@@ -77,8 +77,8 @@ class DiscoverFragment : Fragment(), CoroutineScope {
                         discover_emptyview.gone()
 
                         discover_grid.adapter = activity?.let {
-                            DiscoverAdapter(discovers, it) {
-                                listener?.goToMovieDetails()
+                            DiscoverAdapter(discovers, it) {movie ->
+                                listener?.goToMovieDetails(movie)
                             }
                         }
                     } else {

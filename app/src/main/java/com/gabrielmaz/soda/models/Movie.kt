@@ -1,5 +1,9 @@
 package com.gabrielmaz.soda.models
 
+import android.os.Parcelable
+import kotlinx.android.parcel.Parcelize
+
+@Parcelize
 data class Movie(
     val id: Int,
     val posterPath: String?,
@@ -15,4 +19,4 @@ data class Movie(
     val voteCount: Int,
     val video: Boolean,
     val voteAverage: Float
-)
+) : Parcelable

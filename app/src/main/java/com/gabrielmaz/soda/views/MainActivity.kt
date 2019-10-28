@@ -1,33 +1,31 @@
 package com.gabrielmaz.soda.views
 
-import android.net.Uri
-import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.Fragment
 import com.gabrielmaz.soda.R
-import com.gabrielmaz.soda.controllers.DiscoverController
+import com.gabrielmaz.soda.models.Movie
 import com.gabrielmaz.soda.views.discover.DiscoverFragment
 import com.gabrielmaz.soda.views.favorites.FavoritesFragment
 import com.gabrielmaz.soda.views.movie.MovieDetailFragment
 import kotlinx.android.synthetic.main.activity_main.*
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.launch
-import java.lang.Exception
 import kotlin.coroutines.CoroutineContext
 
 class MainActivity : AppCompatActivity(), CoroutineScope,
     DiscoverFragment.OnFragmentInteractionListener,
     FavoritesFragment.OnFragmentInteractionListener,
     MovieDetailFragment.OnFragmentInteractionListener {
+
     override fun goToDiscovers() {
         showFragment(DiscoverFragment(), getString(R.string.discover_fragment_tag))
     }
 
-    override fun goToMovieDetails() {
+    override fun goToMovieDetails(movie: Movie) {
         supportFragmentManager
             .beginTransaction()
-            .replace(R.id.container, MovieDetailFragment(), null)
+            .replace(R.id.container, MovieDetailFragment.newInstance(movie), null)
             .addToBackStack(getString(R.string.movie_detail_fragment_tag))
             .commit()
 //        showFragment(MovieDetailFragment(), getString(R.string.movie_detail_fragment_tag))
@@ -59,9 +57,14 @@ class MainActivity : AppCompatActivity(), CoroutineScope,
     }
 
     private fun removeActiveFragment() {
+//        while (supportFragmentManager.backStackEntryCount > 1) {
+//            supportFragmentManager.popBackStack()
+//        }
+
         listOf(
-            DiscoverFragmentTag,
-            FavoritesFragmentTag
+            getString(R.string.discover_fragment_tag),
+            getString(R.string.favorites_fragment_tag),
+            getString(R.string.movie_detail_fragment_tag)
         ).forEach { tag ->
             val fragment = supportFragmentManager.findFragmentByTag(tag)
             fragment?.let {

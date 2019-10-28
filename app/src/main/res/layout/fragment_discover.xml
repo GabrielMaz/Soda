@@ -8,17 +8,28 @@
     tools:context=".views.discover.DiscoverFragment">
 
     <SearchView
+        android:id="@+id/discover_search"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content" />
+        android:layout_height="wrap_content"
+        android:inputType="textCapSentences" />
+
+    <RatingBar
+        android:id="@+id/discover_ratingbar"
+        style="@style/RatingBarStyle"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/discover_search"
+        android:layout_centerHorizontal="true" />
 
     <GridView
         android:id="@+id/discover_grid"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
+        android:layout_below="@id/discover_ratingbar"
         android:layout_margin="5dp"
         android:layout_marginTop="10dp"
         android:layout_marginBottom="5dp"
-        android:horizontalSpacing="10dp"
+        android:horizontalSpacing="5dp"
         android:numColumns="2"
         android:verticalSpacing="10dp"
         android:visibility="gone" />
@@ -27,6 +38,7 @@
         android:id="@+id/discover_emptyview"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
+        android:layout_below="@id/discover_ratingbar"
         android:visibility="gone">
 
         <TextView
@@ -44,6 +56,6 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_centerInParent="true"
-        app:SpinKit_Color="@color/orange" />
+        app:SpinKit_Color="@color/yellow" />
 
 </RelativeLayout>
