@@ -1,4 +1,4 @@
-package com.gabrielmaz.soda.models
+package com.gabrielmaz.soda.todo_lo_otro.models
 
 data class Discover(
     val page: Int,
