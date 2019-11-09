@@ -8,7 +8,7 @@ import com.gabrielmaz.soda.R
 import com.gabrielmaz.soda.todo_lo_otro.models.Movie
 import com.gabrielmaz.soda.presentation.view.discover.DiscoverFragment
 import com.gabrielmaz.soda.presentation.view.favorites.FavoritesFragment
-import com.gabrielmaz.soda.views.movie.MovieDetailActivity
+import com.gabrielmaz.soda.presentation.view.movie.MovieDetailActivity
 import kotlinx.android.synthetic.main.activity_main.*
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
