@@ -1,4 +1,4 @@
-package com.gabrielmaz.soda.helpers
+package com.gabrielmaz.soda.presentation.helpers
 
 import android.content.Context
 import android.view.View

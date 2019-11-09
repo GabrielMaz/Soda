@@ -1,13 +1,13 @@
-package com.gabrielmaz.soda.views
+package com.gabrielmaz.soda.presentation.view
 
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.Fragment
 import com.gabrielmaz.soda.R
-import com.gabrielmaz.soda.models.Movie
-import com.gabrielmaz.soda.views.discover.DiscoverFragment
-import com.gabrielmaz.soda.views.favorites.FavoritesFragment
-import com.gabrielmaz.soda.views.movie.MovieDetailFragment
+import com.gabrielmaz.soda.todo_lo_otro.models.Movie
+import com.gabrielmaz.soda.presentation.view.discover.DiscoverFragment
+import com.gabrielmaz.soda.presentation.view.favorites.FavoritesFragment
+import com.gabrielmaz.soda.presentation.view.movie.MovieDetailFragment
 import kotlinx.android.synthetic.main.activity_main.*
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
@@ -22,10 +22,10 @@ class MainActivity : AppCompatActivity(), CoroutineScope,
         showFragment(DiscoverFragment(), getString(R.string.discover_fragment_tag))
     }
 
-    override fun goToMovieDetails(movie: Movie) {
+    override fun goToMovieDetails(selectedMovie: Movie) {
         supportFragmentManager
             .beginTransaction()
-            .replace(R.id.container, MovieDetailFragment.newInstance(movie), null)
+            .replace(R.id.container, MovieDetailFragment.newInstance(selectedMovie), null)
             .addToBackStack(getString(R.string.movie_detail_fragment_tag))
             .commit()
 //        showFragment(MovieDetailFragment(), getString(R.string.movie_detail_fragment_tag))
@@ -49,10 +49,16 @@ class MainActivity : AppCompatActivity(), CoroutineScope,
 
         setBottomNavigationBar()
         when (fragment) {
-            DiscoverFragmentTag -> showFragment(DiscoverFragment(), DiscoverFragmentTag)
-            FavoritesFragmentTag -> showFragment(FavoritesFragment(), FavoritesFragmentTag)
+            DiscoverFragmentTag -> showFragment(DiscoverFragment(),
+                DiscoverFragmentTag
+            )
+            FavoritesFragmentTag -> showFragment(FavoritesFragment(),
+                FavoritesFragmentTag
+            )
 
-            else -> showFragment(DiscoverFragment(), DiscoverFragmentTag)
+            else -> showFragment(DiscoverFragment(),
+                DiscoverFragmentTag
+            )
         }
     }
 
@@ -90,8 +96,12 @@ class MainActivity : AppCompatActivity(), CoroutineScope,
             removeActiveFragment()
 
             when (menuItem.itemId) {
-                R.id.home -> showFragment(DiscoverFragment(), DiscoverFragmentTag)
-                R.id.tasks -> showFragment(FavoritesFragment(), FavoritesFragmentTag)
+                R.id.home -> showFragment(DiscoverFragment(),
+                    DiscoverFragmentTag
+                )
+                R.id.tasks -> showFragment(FavoritesFragment(),
+                    FavoritesFragmentTag
+                )
             }
 
             true
