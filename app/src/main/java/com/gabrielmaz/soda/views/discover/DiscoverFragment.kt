@@ -12,8 +12,6 @@ import com.gabrielmaz.soda.controllers.DiscoverController
 import com.gabrielmaz.soda.helpers.gone
 import com.gabrielmaz.soda.helpers.visible
 import com.gabrielmaz.soda.models.Movie
-import com.github.ybq.android.spinkit.style.DoubleBounce
-import com.github.ybq.android.spinkit.style.Pulse
 import com.github.ybq.android.spinkit.style.Wave
 import kotlinx.android.synthetic.main.fragment_discover.*
 import kotlinx.coroutines.CoroutineScope
@@ -88,8 +86,8 @@ class DiscoverFragment : Fragment(), CoroutineScope {
                 }
             } catch (ex: Exception) {
                 withContext(Dispatchers.Main) {
-                    discovers_loading.gone()
                     println(ex.message)
+                    discovers_loading.gone()
                 }
             }
         }

@@ -1,5 +1,6 @@
 package com.gabrielmaz.soda.views
 
+import android.content.Intent
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.Fragment
@@ -7,7 +8,7 @@ import com.gabrielmaz.soda.R
 import com.gabrielmaz.soda.models.Movie
 import com.gabrielmaz.soda.views.discover.DiscoverFragment
 import com.gabrielmaz.soda.views.favorites.FavoritesFragment
-import com.gabrielmaz.soda.views.movie.MovieDetailFragment
+import com.gabrielmaz.soda.views.movie.MovieDetailActivity
 import kotlinx.android.synthetic.main.activity_main.*
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
@@ -15,20 +16,15 @@ import kotlin.coroutines.CoroutineContext
 
 class MainActivity : AppCompatActivity(), CoroutineScope,
     DiscoverFragment.OnFragmentInteractionListener,
-    FavoritesFragment.OnFragmentInteractionListener,
-    MovieDetailFragment.OnFragmentInteractionListener {
+    FavoritesFragment.OnFragmentInteractionListener {
 
-    override fun goToDiscovers() {
-        showFragment(DiscoverFragment(), getString(R.string.discover_fragment_tag))
-    }
+    private val FAVORITES_FRAGMENT_TAG = "FAVORITES_FRAGMENT_TAG"
+    private val DISCOVER_FRAGMENT_TAG = "DISCOVER_FRAGMENT_TAG"
 
-    override fun goToMovieDetails(movie: Movie) {
-        supportFragmentManager
-            .beginTransaction()
-            .replace(R.id.container, MovieDetailFragment.newInstance(movie), null)
-            .addToBackStack(getString(R.string.movie_detail_fragment_tag))
-            .commit()
-//        showFragment(MovieDetailFragment(), getString(R.string.movie_detail_fragment_tag))
+    override fun goToMovieDetails(selectedMovie: Movie) {
+        val intent = Intent(this, MovieDetailActivity::class.java)
+        intent.putExtra("Movie", selectedMovie)
+        startActivity(intent)
     }
 
     override fun onFragmentInteraction() {
@@ -42,29 +38,31 @@ class MainActivity : AppCompatActivity(), CoroutineScope,
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
 
-        load(DiscoverFragmentTag)
+        load(DISCOVER_FRAGMENT_TAG)
     }
 
     private fun load(fragment: String) {
 
         setBottomNavigationBar()
         when (fragment) {
-            DiscoverFragmentTag -> showFragment(DiscoverFragment(), DiscoverFragmentTag)
-            FavoritesFragmentTag -> showFragment(FavoritesFragment(), FavoritesFragmentTag)
+            DISCOVER_FRAGMENT_TAG -> showFragment(
+                DiscoverFragment(),
+                DISCOVER_FRAGMENT_TAG
+            )
+            FAVORITES_FRAGMENT_TAG -> showFragment(
+                FavoritesFragment(),
+                FAVORITES_FRAGMENT_TAG
+            )
 
-            else -> showFragment(DiscoverFragment(), DiscoverFragmentTag)
+            else -> showFragment(DiscoverFragment(), DISCOVER_FRAGMENT_TAG)
         }
     }
 
     private fun removeActiveFragment() {
-//        while (supportFragmentManager.backStackEntryCount > 1) {
-//            supportFragmentManager.popBackStack()
-//        }
 
         listOf(
-            getString(R.string.discover_fragment_tag),
-            getString(R.string.favorites_fragment_tag),
-            getString(R.string.movie_detail_fragment_tag)
+            FAVORITES_FRAGMENT_TAG,
+            DISCOVER_FRAGMENT_TAG
         ).forEach { tag ->
             val fragment = supportFragmentManager.findFragmentByTag(tag)
             fragment?.let {
@@ -77,7 +75,6 @@ class MainActivity : AppCompatActivity(), CoroutineScope,
     }
 
     private fun showFragment(fragment: Fragment, tag: String) {
-        supportFragmentManager.popBackStack()
         removeActiveFragment()
         supportFragmentManager
             .beginTransaction()
@@ -87,19 +84,20 @@ class MainActivity : AppCompatActivity(), CoroutineScope,
 
     private fun setBottomNavigationBar() {
         bottomNavigation.setOnNavigationItemSelectedListener { menuItem ->
-            removeActiveFragment()
 
             when (menuItem.itemId) {
-                R.id.home -> showFragment(DiscoverFragment(), DiscoverFragmentTag)
-                R.id.tasks -> showFragment(FavoritesFragment(), FavoritesFragmentTag)
+                R.id.home -> showFragment(
+                    DiscoverFragment(),
+                    DISCOVER_FRAGMENT_TAG
+                )
+                R.id.tasks -> showFragment(
+                    FavoritesFragment(),
+                    FAVORITES_FRAGMENT_TAG
+                )
             }
 
             true
         }
     }
 
-    companion object {
-        const val DiscoverFragmentTag = "DiscoverFragment"
-        const val FavoritesFragmentTag = "FavoritesFragment"
-    }
 }

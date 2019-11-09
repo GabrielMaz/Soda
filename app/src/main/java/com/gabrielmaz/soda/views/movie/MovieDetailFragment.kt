@@ -3,17 +3,15 @@ package com.gabrielmaz.soda.views.movie
 
 import android.content.Context
 import android.os.Bundle
-import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.fragment.app.Fragment
 import com.bumptech.glide.Glide
-
 import com.gabrielmaz.soda.R
 import com.gabrielmaz.soda.controllers.RetrofitController
 import com.gabrielmaz.soda.models.Movie
 import kotlinx.android.synthetic.main.fragment_movie_detail.*
-import kotlinx.android.synthetic.main.item_discover.view.*
 
 class MovieDetailFragment : Fragment() {
 

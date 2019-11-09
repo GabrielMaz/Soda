@@ -1,11 +1,6 @@
 <resources>
     <string name="app_name">SODA</string>
 
-    <!-- Tags -->
-    <string name="favorites_fragment_tag">FAVORITES_FRAGMENT_TAG</string>
-    <string name="discover_fragment_tag">DISCOVER_FRAGMENT_TAG</string>
-    <string name="movie_detail_fragment_tag">MOVIE_DETAIL_FRAGMENT_TAG</string>
-
     <string name="title_discovers">Discovers</string>
     <string name="title_favorites">Favorites</string>
     <string name="discovers_emptyview">There aren\t discovers</string>
