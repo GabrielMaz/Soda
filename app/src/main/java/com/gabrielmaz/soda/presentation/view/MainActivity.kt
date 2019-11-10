@@ -1,14 +1,14 @@
-package com.gabrielmaz.soda.views
+package com.gabrielmaz.soda.presentation.view
 
 import android.content.Intent
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.Fragment
 import com.gabrielmaz.soda.R
-import com.gabrielmaz.soda.models.Movie
-import com.gabrielmaz.soda.views.discover.DiscoverFragment
-import com.gabrielmaz.soda.views.favorites.FavoritesFragment
-import com.gabrielmaz.soda.views.movie.MovieDetailActivity
+import com.gabrielmaz.soda.todo_lo_otro.models.Movie
+import com.gabrielmaz.soda.presentation.view.discover.DiscoverFragment
+import com.gabrielmaz.soda.presentation.view.favorites.FavoritesFragment
+import com.gabrielmaz.soda.presentation.view.movie.MovieDetailActivity
 import kotlinx.android.synthetic.main.activity_main.*
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers

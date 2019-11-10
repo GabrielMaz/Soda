@@ -1,4 +1,4 @@
-package com.gabrielmaz.soda.adapters
+package com.gabrielmaz.soda.presentation.view.discover
 
 import android.content.Context
 import android.view.LayoutInflater
@@ -7,8 +7,8 @@ import android.view.ViewGroup
 import android.widget.BaseAdapter
 import com.bumptech.glide.Glide
 import com.gabrielmaz.soda.R
-import com.gabrielmaz.soda.controllers.RetrofitController
-import com.gabrielmaz.soda.models.Movie
+import com.gabrielmaz.soda.todo_lo_otro.controllers.RetrofitController
+import com.gabrielmaz.soda.todo_lo_otro.models.Movie
 import kotlinx.android.synthetic.main.item_discover.view.*
 
 class DiscoverAdapter(

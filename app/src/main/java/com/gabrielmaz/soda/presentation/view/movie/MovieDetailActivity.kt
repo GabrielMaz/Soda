@@ -1,14 +1,13 @@
-package com.gabrielmaz.soda.views.movie
+package com.gabrielmaz.soda.presentation.view.movie
 
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
-import androidx.fragment.app.Fragment
 import com.gabrielmaz.soda.R
-import com.gabrielmaz.soda.models.Movie
+import com.gabrielmaz.soda.todo_lo_otro.models.Movie
 
 class MovieDetailActivity : AppCompatActivity(), MovieDetailFragment.OnFragmentInteractionListener {
 
-    private lateinit var movie: Movie;
+    private lateinit var movie: Movie
 
     override fun goToDiscovers() {
         finish()
