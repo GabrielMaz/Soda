@@ -1,6 +1,6 @@
-package com.gabrielmaz.soda.todo_lo_otro.services
+package com.gabrielmaz.soda.data.services
 
-import com.gabrielmaz.soda.todo_lo_otro.models.Discover
+import com.gabrielmaz.soda.data.models.Discover
 import retrofit2.http.GET
 import retrofit2.http.Query
 

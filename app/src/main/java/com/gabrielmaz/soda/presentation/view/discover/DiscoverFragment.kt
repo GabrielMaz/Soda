@@ -6,26 +6,24 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
+import androidx.lifecycle.Observer
 import com.gabrielmaz.soda.R
-import com.gabrielmaz.soda.todo_lo_otro.controllers.DiscoverController
-import com.gabrielmaz.soda.presentation.helpers.gone
-import com.gabrielmaz.soda.presentation.helpers.visible
-import com.gabrielmaz.soda.todo_lo_otro.models.Movie
+import com.gabrielmaz.soda.data.models.Movie
+import com.gabrielmaz.soda.presentation.helpers.visibleIf
 import com.github.ybq.android.spinkit.style.Wave
 import kotlinx.android.synthetic.main.fragment_discover.*
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.launch
-import kotlinx.coroutines.withContext
 import kotlin.coroutines.CoroutineContext
 
 class DiscoverFragment : Fragment(), CoroutineScope {
     override val coroutineContext: CoroutineContext
         get() = Dispatchers.Main
     private var listener: OnFragmentInteractionListener? = null
+    
+    private lateinit var adapter: DiscoverAdapter
+    private val discoverViewModel = DiscoverViewModel()
 
-    private var discoverController = DiscoverController()
-    private lateinit var discovers: ArrayList<Movie>
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -39,7 +37,19 @@ class DiscoverFragment : Fragment(), CoroutineScope {
 
         discovers_loading.setIndeterminateDrawable(Wave())
 
-        load()
+        adapter = activity?.let {
+            DiscoverAdapter(
+                it
+            ) { movie ->
+                listener?.goToMovieDetails(movie)
+            }
+        }!!
+        discover_grid.adapter = adapter
+
+        discoverViewModel.loadMovies()
+        discoverViewModel.movies.observe(viewLifecycleOwner, Observer(this::loadMovies))
+        discoverViewModel.isLoading.observe(viewLifecycleOwner, Observer(this::loadingStateChanged))
+        discoverViewModel.isEmptyList.observe(viewLifecycleOwner, Observer(this::gridStateChanged))
     }
 
     override fun onAttach(context: Context) {
@@ -60,40 +70,17 @@ class DiscoverFragment : Fragment(), CoroutineScope {
         fun goToMovieDetails(selectedMovie: Movie)
     }
 
-    private fun load() {
-        discovers = ArrayList()
-
-        launch(Dispatchers.IO) {
-            try {
-                discovers = discoverController.getDiscovers().results
-
-                withContext(Dispatchers.Main) {
-                    discovers_loading.gone()
-                    if (discovers.isNotEmpty()) {
-                        discover_grid.visible()
-                        discover_emptyview.gone()
-
-                        discover_grid.adapter = activity?.let {
-                            DiscoverAdapter(
-                                discovers,
-                                it
-                            ) { movie ->
-                                listener?.goToMovieDetails(movie)
-                            }
-                        }
-                    } else {
-                        discover_grid.gone()
-                        discover_emptyview.visible()
-                    }
-                }
-            } catch (ex: Exception) {
-                withContext(Dispatchers.Main) {
-                    println(ex.message)
-                    discovers_loading.gone()
-                }
-            }
-        }
-
+    private fun loadMovies(discovers: ArrayList<Movie>) {
+        adapter.discovers = discovers
     }
 
+    private fun loadingStateChanged(isLoading: Boolean) {
+        discovers_loading.visibleIf(isLoading)
+        discover_content.visibleIf(!isLoading)
+    }
+
+    private fun gridStateChanged(isEmptyList: Boolean) {
+        discover_grid.visibleIf(!isEmptyList)
+        discover_emptyview.visibleIf(isEmptyList)
+    }
 }

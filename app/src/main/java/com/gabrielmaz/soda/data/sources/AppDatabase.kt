@@ -1,10 +1,10 @@
-package com.gabrielmaz.soda.todo_lo_otro.sources
+package com.gabrielmaz.soda.data.sources
 
 import android.content.Context
 import androidx.room.Database
 import androidx.room.Room
 import androidx.room.RoomDatabase
-import com.gabrielmaz.soda.todo_lo_otro.models.Movie
+import com.gabrielmaz.soda.data.models.Movie
 
 @Database(entities = [Movie::class], version = 1, exportSchema = false)
 abstract class AppDatabase : RoomDatabase() {

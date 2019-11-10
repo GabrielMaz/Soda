@@ -1,8 +1,8 @@
-package com.gabrielmaz.soda.todo_lo_otro.dao
+package com.gabrielmaz.soda.data.dao
 
 import androidx.room.Dao
 import androidx.room.Query
-import com.gabrielmaz.soda.todo_lo_otro.models.Movie
+import com.gabrielmaz.soda.data.models.Movie
 
 @Dao
 interface MovieDao {

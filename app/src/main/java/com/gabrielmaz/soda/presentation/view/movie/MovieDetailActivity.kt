@@ -3,7 +3,7 @@ package com.gabrielmaz.soda.presentation.view.movie
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import com.gabrielmaz.soda.R
-import com.gabrielmaz.soda.todo_lo_otro.models.Movie
+import com.gabrielmaz.soda.data.models.Movie
 
 class MovieDetailActivity : AppCompatActivity(), MovieDetailFragment.OnFragmentInteractionListener {
 
