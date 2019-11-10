@@ -5,6 +5,7 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.SearchView.OnQueryTextListener
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
 import com.gabrielmaz.soda.R
@@ -45,6 +46,17 @@ class DiscoverFragment : Fragment(), CoroutineScope {
             }
         }!!
         discover_grid.adapter = adapter
+
+        discover_search.setOnQueryTextListener(object : OnQueryTextListener {
+            override fun onQueryTextSubmit(query: String): Boolean {
+                return false
+            }
+
+            override fun onQueryTextChange(newText: String): Boolean {
+                discoverViewModel.loadMoviesByName(newText)
+                return true
+            }
+        })
 
         discoverViewModel.loadMovies()
         discoverViewModel.movies.observe(viewLifecycleOwner, Observer(this::loadMovies))

@@ -43,4 +43,26 @@ class DiscoverViewModel() : ViewModel(),
             }
         }
     }
+
+    fun loadMoviesByName(name: String) {
+
+        if (name.trim() == "") {
+            loadMovies()
+        } else {
+
+            localIsLoading.postValue(true)
+            localIsEmptyList.postValue(true)
+            launch(Dispatchers.IO) {
+                try {
+                    val movies = controller.getDiscoversByName(name).results
+                    localMovies.postValue(movies)
+                    localIsEmptyList.postValue(movies.isEmpty())
+                } catch (exception: Exception) {
+
+                } finally {
+                    localIsLoading.postValue(false)
+                }
+            }
+        }
+    }
 }

@@ -29,7 +29,9 @@ class DiscoverAdapter(
         val view = inflator.inflate(R.layout.item_discover, null)
 
         view.item_discover_title.text = item.title
-        view.item_discover_year.text = item.releaseDate.subSequence(0, 4)
+        if (item.releaseDate.length > 4) {
+            view.item_discover_year.text = item.releaseDate.subSequence(0, 4)
+        }
         view.item_discover_rate.text = item.voteAverage.toString()
         view.item_discover_card.setOnClickListener {
             onClick(item)
