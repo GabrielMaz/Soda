@@ -7,48 +7,54 @@
     android:orientation="vertical"
     tools:context=".presentation.view.discover.DiscoverFragment">
 
-    <SearchView
-        android:id="@+id/discover_search"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:inputType="textCapSentences" />
-
-    <RatingBar
-        android:id="@+id/discover_ratingbar"
-        style="@style/RatingBarStyle"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_below="@id/discover_search"
-        android:layout_centerHorizontal="true" />
-
-    <GridView
-        android:id="@+id/discover_grid"
+    <LinearLayout
+        android:id="@+id/discover_content"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_below="@id/discover_ratingbar"
-        android:layout_margin="5dp"
-        android:layout_marginTop="10dp"
-        android:layout_marginBottom="5dp"
-        android:horizontalSpacing="5dp"
-        android:numColumns="2"
-        android:verticalSpacing="10dp"
-        android:visibility="gone" />
+        android:orientation="vertical"
+        android:gravity="center_horizontal">
 
-    <RelativeLayout
-        android:id="@+id/discover_emptyview"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:layout_below="@id/discover_ratingbar"
-        android:visibility="gone">
+        <SearchView
+            android:id="@+id/discover_search"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:inputType="textCapSentences" />
 
-        <TextView
+        <RatingBar
+            android:id="@+id/discover_ratingbar"
+            style="@style/RatingBarStyle"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_centerInParent="true"
-            android:layout_gravity="center"
-            android:text="@string/discovers_emptyview"
-            android:textSize="20sp" />
-    </RelativeLayout>
+            android:stepSize="1" />
+
+        <GridView
+            android:id="@+id/discover_grid"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_margin="5dp"
+            android:layout_marginTop="10dp"
+            android:layout_marginBottom="5dp"
+            android:horizontalSpacing="5dp"
+            android:numColumns="2"
+            android:verticalSpacing="10dp"
+            android:visibility="gone" />
+
+        <RelativeLayout
+            android:id="@+id/discover_emptyview"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:visibility="gone">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerInParent="true"
+                android:layout_gravity="center"
+                android:text="@string/discovers_emptyview"
+                android:textSize="20sp" />
+        </RelativeLayout>
+
+    </LinearLayout>
 
     <com.github.ybq.android.spinkit.SpinKitView
         android:id="@+id/discovers_loading"

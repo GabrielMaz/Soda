@@ -3,7 +3,7 @@
 
     <string name="title_discovers">Discovers</string>
     <string name="title_favorites">Favorites</string>
-    <string name="discovers_emptyview">There aren\t discovers</string>
+    <string name="discovers_emptyview">There aren\'t discovers</string>
     <string name="director">Director</string>
     <string name="writers">Writers</string>
     <string name="stars">Stars</string>

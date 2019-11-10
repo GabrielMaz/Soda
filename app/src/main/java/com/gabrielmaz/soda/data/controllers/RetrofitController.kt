@@ -1,4 +1,4 @@
-package com.gabrielmaz.soda.todo_lo_otro.controllers
+package com.gabrielmaz.soda.data.controllers
 
 import com.gabrielmaz.soda.App
 import com.google.gson.FieldNamingPolicy
