@@ -8,4 +8,6 @@ class DiscoverController {
     suspend fun getDiscovers() = discoverService.getDiscovers(RetrofitController.apiKey)
 
     suspend fun getDiscoversByName(name: String) = discoverService.getDiscoversByName(RetrofitController.apiKey, name)
+
+    suspend fun getDiscoversByRate(min: Int, max: Int) = discoverService.getDiscoversByRate(RetrofitController.apiKey, min, max)
 }

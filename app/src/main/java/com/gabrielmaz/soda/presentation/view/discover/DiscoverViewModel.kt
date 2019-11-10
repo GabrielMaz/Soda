@@ -45,11 +45,9 @@ class DiscoverViewModel() : ViewModel(),
     }
 
     fun loadMoviesByName(name: String) {
-
         if (name.trim() == "") {
             loadMovies()
         } else {
-
             localIsLoading.postValue(true)
             localIsEmptyList.postValue(true)
             launch(Dispatchers.IO) {
@@ -62,6 +60,45 @@ class DiscoverViewModel() : ViewModel(),
                 } finally {
                     localIsLoading.postValue(false)
                 }
+            }
+        }
+    }
+
+    fun loadMoviesByRate(stars: Float) {
+        var min: Int = 0
+        var max: Int = 0
+
+        if (stars.compareTo(0.0) == 0) {
+            loadMovies()
+            return
+        } else if (stars.compareTo(1.0) <= 0){
+            min = 0
+            max = 2
+        } else if (stars.compareTo(2.0) <= 0) {
+            min = 2
+            max = 4
+        } else if (stars.compareTo(3.0) <= 0) {
+            min = 4
+            max = 6
+        } else if (stars.compareTo(4.0) <= 0) {
+            min = 6
+            max = 8
+        } else if (stars.compareTo(5.0) <= 0) {
+            min = 8
+            max = 10
+        }
+
+        localIsLoading.postValue(true)
+        localIsEmptyList.postValue(true)
+        launch(Dispatchers.IO) {
+            try {
+                val movies = controller.getDiscoversByRate(min, max).results
+                localMovies.postValue(movies)
+                localIsEmptyList.postValue(movies.isEmpty())
+            } catch (exception: Exception) {
+
+            } finally {
+                localIsLoading.postValue(false)
             }
         }
     }

@@ -5,6 +5,7 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.RatingBar
 import android.widget.SearchView.OnQueryTextListener
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
@@ -21,7 +22,7 @@ class DiscoverFragment : Fragment(), CoroutineScope {
     override val coroutineContext: CoroutineContext
         get() = Dispatchers.Main
     private var listener: OnFragmentInteractionListener? = null
-    
+
     private lateinit var adapter: DiscoverAdapter
     private val discoverViewModel = DiscoverViewModel()
 
@@ -57,6 +58,13 @@ class DiscoverFragment : Fragment(), CoroutineScope {
                 return true
             }
         })
+
+        discover_ratingbar.onRatingBarChangeListener =
+            RatingBar.OnRatingBarChangeListener { _, rating, _ ->
+                discoverViewModel.loadMoviesByRate(
+                    rating
+                )
+            }
 
         discoverViewModel.loadMovies()
         discoverViewModel.movies.observe(viewLifecycleOwner, Observer(this::loadMovies))
