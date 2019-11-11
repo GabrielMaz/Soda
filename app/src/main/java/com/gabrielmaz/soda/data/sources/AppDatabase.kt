@@ -4,10 +4,13 @@ import android.content.Context
 import androidx.room.Database
 import androidx.room.Room
 import androidx.room.RoomDatabase
+import com.gabrielmaz.soda.data.dao.MovieDao
 import com.gabrielmaz.soda.data.models.Movie
 
 @Database(entities = [Movie::class], version = 1, exportSchema = false)
 abstract class AppDatabase : RoomDatabase() {
+    abstract fun movieDao(): MovieDao
+
     companion object {
         private val LOG_TAG = AppDatabase::class.java.canonicalName
         private val LOCK = Any()

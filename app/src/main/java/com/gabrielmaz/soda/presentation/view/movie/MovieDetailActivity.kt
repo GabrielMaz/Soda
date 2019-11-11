@@ -5,13 +5,9 @@ import android.os.Bundle
 import com.gabrielmaz.soda.R
 import com.gabrielmaz.soda.data.models.Movie
 
-class MovieDetailActivity : AppCompatActivity(), MovieDetailFragment.OnFragmentInteractionListener {
+class MovieDetailActivity : AppCompatActivity() {
 
     private lateinit var movie: Movie
-
-    override fun goToDiscovers() {
-        finish()
-    }
 
     private val MOVIE_DETAIL_FRAGMENT_TAG = "MOVIE_DETAIL_FRAGMENT_TAG"
 

@@ -14,18 +14,12 @@ import com.gabrielmaz.soda.data.models.Movie
 import com.gabrielmaz.soda.presentation.helpers.visibleIf
 import com.github.ybq.android.spinkit.style.Wave
 import kotlinx.android.synthetic.main.fragment_discover.*
-import kotlinx.coroutines.CoroutineScope
-import kotlinx.coroutines.Dispatchers
-import kotlin.coroutines.CoroutineContext
 
-class DiscoverFragment : Fragment(), CoroutineScope {
-    override val coroutineContext: CoroutineContext
-        get() = Dispatchers.Main
+class DiscoverFragment : Fragment() {
     private var listener: OnFragmentInteractionListener? = null
 
     private lateinit var adapter: DiscoverAdapter
     private val discoverViewModel = DiscoverViewModel()
-
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,

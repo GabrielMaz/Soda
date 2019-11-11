@@ -64,6 +64,15 @@
                 android:text="7.4"
                 tools:text="7.4" />
 
+            <ImageView
+                android:id="@+id/movie_favorite_button"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/movie_year"
+                android:layout_alignParentEnd="true"
+                android:src="@drawable/ic_favorite"
+                android:layout_marginTop="5dp"/>
+
             <TextView
                 android:id="@+id/movie_description"
                 style="@style/TextViewStyle"

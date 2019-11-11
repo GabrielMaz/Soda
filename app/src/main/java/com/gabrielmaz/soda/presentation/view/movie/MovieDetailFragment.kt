@@ -1,22 +1,24 @@
 package com.gabrielmaz.soda.presentation.view.movie
 
 
-import android.content.Context
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
+import androidx.lifecycle.Observer
 import com.bumptech.glide.Glide
 import com.gabrielmaz.soda.R
 import com.gabrielmaz.soda.data.controllers.RetrofitController
 import com.gabrielmaz.soda.data.models.Movie
+import com.gabrielmaz.soda.data.sources.AppDatabase
 import kotlinx.android.synthetic.main.fragment_movie_detail.*
+import kotlinx.coroutines.Dispatchers
 
 class MovieDetailFragment : Fragment() {
-
-    private var listener: OnFragmentInteractionListener? = null
     var movie: Movie? = null
+
+    private val movieDetailViewModel = MovieDetailViewModel()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -48,24 +50,24 @@ class MovieDetailFragment : Fragment() {
         movie_year.text = movie?.releaseDate?.subSequence(0, 4)
         movie_description.text = movie?.overview
 
-    }
-
-    override fun onAttach(context: Context) {
-        super.onAttach(context)
-        if (context is OnFragmentInteractionListener) {
-            listener = context
-        } else {
-            throw RuntimeException("$context must implement OnFragmentInteractionListener")
+        movie?.let { validMovie ->
+            activity?.let { activity ->
+                movieDetailViewModel.setMovie(activity, validMovie)
+            }
+            movie_favorite_button.setOnClickListener {
+                activity?.let { activity ->
+                    movieDetailViewModel.toggleFavorite(activity, validMovie)
+                }
+            }
         }
+
+        movieDetailViewModel.isFavorite.observe(viewLifecycleOwner, Observer(this::isFavoriteChanged))
     }
 
-    override fun onDetach() {
-        super.onDetach()
-        listener = null
-    }
-
-    interface OnFragmentInteractionListener {
-        fun goToDiscovers()
+    private fun isFavoriteChanged(isFavorite: Boolean) {
+        movie_favorite_button.setImageResource(
+            if (isFavorite) R.drawable.ic_favorite_red else R.drawable.ic_favorite
+        )
     }
 
     companion object {

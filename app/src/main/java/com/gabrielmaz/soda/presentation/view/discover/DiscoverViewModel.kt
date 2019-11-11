@@ -11,7 +11,7 @@ import kotlinx.coroutines.launch
 import java.lang.Exception
 import kotlin.coroutines.CoroutineContext
 
-class DiscoverViewModel() : ViewModel(),
+class DiscoverViewModel : ViewModel(),
     CoroutineScope {
     override val coroutineContext: CoroutineContext
         get() = Dispatchers.Main
