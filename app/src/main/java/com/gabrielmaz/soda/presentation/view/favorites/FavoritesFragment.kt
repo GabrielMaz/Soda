@@ -8,8 +8,18 @@ import android.view.View
 import android.view.ViewGroup
 
 import com.gabrielmaz.soda.R
+import com.gabrielmaz.soda.data.sources.AppDatabase
+import kotlinx.android.synthetic.main.fragment_favorites.*
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.launch
+import kotlinx.coroutines.withContext
+import kotlin.coroutines.CoroutineContext
 
-class FavoritesFragment : Fragment() {
+class FavoritesFragment : Fragment(), CoroutineScope {
+    override val coroutineContext: CoroutineContext
+        get() = Dispatchers.Main
+
     private var listener: OnFragmentInteractionListener? = null
 
     override fun onCreateView(
@@ -17,6 +27,18 @@ class FavoritesFragment : Fragment() {
         savedInstanceState: Bundle?
     ): View? {
         return inflater.inflate(R.layout.fragment_favorites, container, false)
+    }
+
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
+        launch(Dispatchers.IO) {
+            activity?.let { activity ->
+                var favorites = AppDatabase.getInstance(activity).movieDao().getFavorites()
+                withContext(Dispatchers.Main) {
+                    favorites_text.text = favorites.joinToString("\n") { it.title }
+                }
+            }
+        }
     }
 
     fun onButtonPressed() {
