@@ -1,6 +1,6 @@
 package com.gabrielmaz.soda.data.controllers
 
-import com.gabrielmaz.soda.data.services.DiscoverService
+import com.gabrielmaz.soda.data.service.DiscoverService
 
 class DiscoverController {
     private val discoverService = RetrofitController.retrofit.create(DiscoverService::class.java)

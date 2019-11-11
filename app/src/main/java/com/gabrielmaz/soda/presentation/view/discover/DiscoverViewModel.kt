@@ -5,10 +5,10 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import com.gabrielmaz.soda.data.controllers.DiscoverController
 import com.gabrielmaz.soda.data.models.Movie
+import com.gabrielmaz.soda.data.models.Review
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
-import java.lang.Exception
 import kotlin.coroutines.CoroutineContext
 
 class DiscoverViewModel : ViewModel(),
@@ -16,7 +16,7 @@ class DiscoverViewModel : ViewModel(),
     override val coroutineContext: CoroutineContext
         get() = Dispatchers.Main
 
-    private val controller = DiscoverController()
+    private val discoverController = DiscoverController()
     private val localMovies = MutableLiveData<ArrayList<Movie>>()
     private val localIsLoading = MutableLiveData<Boolean>()
     private val localIsEmptyList = MutableLiveData<Boolean>()
@@ -33,7 +33,7 @@ class DiscoverViewModel : ViewModel(),
         localIsEmptyList.postValue(true)
         launch(Dispatchers.IO) {
             try {
-                val movies = controller.getDiscovers().results
+                val movies = discoverController.getDiscovers().results
                 localMovies.postValue(movies)
                 localIsEmptyList.postValue(movies.isEmpty())
             } catch (exception: Exception) {
@@ -52,7 +52,7 @@ class DiscoverViewModel : ViewModel(),
             localIsEmptyList.postValue(true)
             launch(Dispatchers.IO) {
                 try {
-                    val movies = controller.getDiscoversByName(name).results
+                    val movies = discoverController.getDiscoversByName(name).results
                     localMovies.postValue(movies)
                     localIsEmptyList.postValue(movies.isEmpty())
                 } catch (exception: Exception) {
@@ -71,7 +71,7 @@ class DiscoverViewModel : ViewModel(),
         if (stars.compareTo(0.0) == 0) {
             loadMovies()
             return
-        } else if (stars.compareTo(1.0) <= 0){
+        } else if (stars.compareTo(1.0) <= 0) {
             min = 0
             max = 2
         } else if (stars.compareTo(2.0) <= 0) {
@@ -92,7 +92,7 @@ class DiscoverViewModel : ViewModel(),
         localIsEmptyList.postValue(true)
         launch(Dispatchers.IO) {
             try {
-                val movies = controller.getDiscoversByRate(min, max).results
+                val movies = discoverController.getDiscoversByRate(min, max).results
                 localMovies.postValue(movies)
                 localIsEmptyList.postValue(movies.isEmpty())
             } catch (exception: Exception) {

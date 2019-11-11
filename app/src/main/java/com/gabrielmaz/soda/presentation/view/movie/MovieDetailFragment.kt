@@ -1,6 +1,7 @@
 package com.gabrielmaz.soda.presentation.view.movie
 
 
+import android.graphics.Paint
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
@@ -49,6 +50,7 @@ class MovieDetailFragment : Fragment() {
         movie_rate.text = movie?.voteAverage.toString()
         movie_year.text = movie?.releaseDate?.subSequence(0, 4)
         movie_description.text = movie?.overview
+        movie_reviews.paintFlags = Paint.UNDERLINE_TEXT_FLAG
 
         movie?.let { validMovie ->
             activity?.let { activity ->
@@ -61,13 +63,23 @@ class MovieDetailFragment : Fragment() {
             }
         }
 
-        movieDetailViewModel.isFavorite.observe(viewLifecycleOwner, Observer(this::isFavoriteChanged))
+        movie?.id?.let { movieDetailViewModel.loadReviews(it) }
+        movieDetailViewModel.reviews.observe(viewLifecycleOwner, Observer(this::reviewsSize))
+        movieDetailViewModel.isFavorite.observe(
+            viewLifecycleOwner,
+            Observer(this::isFavoriteChanged)
+        )
     }
 
     private fun isFavoriteChanged(isFavorite: Boolean) {
         movie_favorite_button.setImageResource(
             if (isFavorite) R.drawable.ic_favorite_red else R.drawable.ic_favorite
         )
+    }
+
+    private fun reviewsSize(size: Int) {
+        val reviewsText = "Reviews ($size)"
+        movie_reviews.text = reviewsText
     }
 
     companion object {
