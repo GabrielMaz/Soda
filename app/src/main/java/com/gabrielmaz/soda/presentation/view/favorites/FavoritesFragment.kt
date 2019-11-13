@@ -49,7 +49,6 @@ class FavoritesFragment : Fragment(), CoroutineScope {
 
         favorites_grid.adapter = adapter
 
-        favoritesViewModel.loadFavorites(activity!!)
         favoritesViewModel.favorites.observe(viewLifecycleOwner, Observer(this::loadMovies))
         favoritesViewModel.isLoading.observe(
             viewLifecycleOwner,
@@ -71,6 +70,11 @@ class FavoritesFragment : Fragment(), CoroutineScope {
     override fun onDetach() {
         super.onDetach()
         listener = null
+    }
+
+    override fun onResume() {
+        super.onResume()
+        favoritesViewModel.loadFavorites(activity!!)
     }
 
     interface OnFragmentInteractionListener {
