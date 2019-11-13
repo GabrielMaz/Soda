@@ -1,4 +1,4 @@
-package com.gabrielmaz.soda.presentation.view.discover
+package com.gabrielmaz.soda.presentation.view.shared
 
 import android.content.Context
 import android.view.LayoutInflater
@@ -11,20 +11,20 @@ import com.gabrielmaz.soda.data.controllers.RetrofitController
 import com.gabrielmaz.soda.data.models.Movie
 import kotlinx.android.synthetic.main.item_discover.view.*
 
-class DiscoverAdapter(
+class MovieAdapter(
     private val context: Context,
     private var onClick: (Movie) -> Unit
 ) :
     BaseAdapter() {
-    var discovers = arrayListOf<Movie>()
+    var movies = listOf<Movie>()
         set(value) {
             field = value
             notifyDataSetChanged()
         }
 
     override fun getView(position: Int, convertView: View?, parent: ViewGroup?): View {
-        val item = discovers[position]
 
+        val item = movies[position]
         val inflator = context.getSystemService(Context.LAYOUT_INFLATER_SERVICE) as LayoutInflater
         val view = inflator.inflate(R.layout.item_discover, null)
 
@@ -48,7 +48,7 @@ class DiscoverAdapter(
     }
 
     override fun getItem(position: Int): Any {
-        return discovers[position]
+        return movies[position]
     }
 
     override fun getItemId(position: Int): Long {
@@ -56,7 +56,7 @@ class DiscoverAdapter(
     }
 
     override fun getCount(): Int {
-        return discovers.size
+        return movies.size
     }
 
 }

@@ -27,10 +27,6 @@ class MainActivity : AppCompatActivity(), CoroutineScope,
         startActivity(intent)
     }
 
-    override fun onFragmentInteraction() {
-
-    }
-
     override val coroutineContext: CoroutineContext
         get() = Dispatchers.Main
 

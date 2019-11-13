@@ -17,14 +17,14 @@ import kotlinx.android.synthetic.main.fragment_movie_detail.*
 
 class MovieDetailFragment : Fragment() {
     private var listener: OnFragmentInteractionListener? = null
-    var movie: Movie? = null
+    private lateinit var movie: Movie
 
     private val movieDetailViewModel = MovieDetailViewModel()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
-        movie = arguments?.getParcelable(selectedMovieTag)
+        movie = arguments?.getParcelable(selectedMovieTag)!!
     }
 
     override fun onCreateView(
@@ -47,26 +47,21 @@ class MovieDetailFragment : Fragment() {
         activity?.let {
             Glide
                 .with(it)
-                .load("${RetrofitController.baseImageUrl}${movie?.posterPath}")
+                .load("${RetrofitController.baseImageUrl}${movie.posterPath}")
                 .centerCrop()
                 .placeholder(R.drawable.ic_place_holder)
                 .into(movie_image)
         }
 
-        movie_title.text = movie?.title
-        movie_rate.text = movie?.voteAverage.toString()
-        movie_year.text = movie?.releaseDate?.subSequence(0, 4)
-        movie_description.text = movie?.overview
+        movie_title.text = movie.title
+        movie_rate.text = movie.voteAverage.toString()
+        movie_year.text = movie.releaseDate.subSequence(0, 4)
+        movie_description.text = movie.overview
 
-        movie?.let { validMovie ->
-            activity?.let { activity ->
-                movieDetailViewModel.setMovie(activity, validMovie)
-            }
-            movie_favorite_button.setOnClickListener {
-                activity?.let { activity ->
-                    movieDetailViewModel.toggleFavorite(activity, validMovie)
-                }
-            }
+        movieDetailViewModel.setMovie(activity!!, movie)
+        movie_favorite_button.setOnClickListener {
+            movieDetailViewModel.toggleFavorite(activity!!, movie)
+
         }
 
         movie_reviews.paintFlags = Paint.UNDERLINE_TEXT_FLAG

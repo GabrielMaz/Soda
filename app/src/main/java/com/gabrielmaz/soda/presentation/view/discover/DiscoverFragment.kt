@@ -12,13 +12,14 @@ import androidx.lifecycle.Observer
 import com.gabrielmaz.soda.R
 import com.gabrielmaz.soda.data.models.Movie
 import com.gabrielmaz.soda.presentation.helpers.visibleIf
+import com.gabrielmaz.soda.presentation.view.shared.MovieAdapter
 import com.github.ybq.android.spinkit.style.Wave
 import kotlinx.android.synthetic.main.fragment_discover.*
 
 class DiscoverFragment : Fragment() {
     private var listener: OnFragmentInteractionListener? = null
 
-    private lateinit var adapter: DiscoverAdapter
+    private lateinit var adapter: MovieAdapter
     private val discoverViewModel = DiscoverViewModel()
 
     override fun onCreateView(
@@ -34,7 +35,7 @@ class DiscoverFragment : Fragment() {
         discovers_loading.setIndeterminateDrawable(Wave())
 
         adapter = activity?.let {
-            DiscoverAdapter(
+            MovieAdapter(
                 it
             ) { movie ->
                 listener?.goToMovieDetails(movie)
@@ -84,8 +85,8 @@ class DiscoverFragment : Fragment() {
         fun goToMovieDetails(selectedMovie: Movie)
     }
 
-    private fun loadMovies(discovers: ArrayList<Movie>) {
-        adapter.discovers = discovers
+    private fun loadMovies(movies: ArrayList<Movie>) {
+        adapter.movies = movies
     }
 
     private fun loadingStateChanged(isLoading: Boolean) {

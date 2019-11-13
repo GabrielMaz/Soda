@@ -2,18 +2,20 @@ package com.gabrielmaz.soda.presentation.view.favorites
 
 import android.content.Context
 import android.os.Bundle
-import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-
+import androidx.fragment.app.Fragment
+import androidx.lifecycle.Observer
+import androidx.recyclerview.widget.LinearLayoutManager
 import com.gabrielmaz.soda.R
-import com.gabrielmaz.soda.data.sources.AppDatabase
+import com.gabrielmaz.soda.data.models.Movie
+import com.gabrielmaz.soda.presentation.helpers.visibleIf
+import com.gabrielmaz.soda.presentation.view.shared.MovieAdapter
+import com.github.ybq.android.spinkit.style.Wave
 import kotlinx.android.synthetic.main.fragment_favorites.*
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.launch
-import kotlinx.coroutines.withContext
 import kotlin.coroutines.CoroutineContext
 
 class FavoritesFragment : Fragment(), CoroutineScope {
@@ -21,6 +23,9 @@ class FavoritesFragment : Fragment(), CoroutineScope {
         get() = Dispatchers.Main
 
     private var listener: OnFragmentInteractionListener? = null
+
+    private lateinit var adapter: MovieAdapter
+    private val favoritesViewModel = FavoritesViewModel()
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -31,14 +36,27 @@ class FavoritesFragment : Fragment(), CoroutineScope {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        launch(Dispatchers.IO) {
-            activity?.let { activity ->
-                var favorites = AppDatabase.getInstance(activity).movieDao().getFavorites()
-                withContext(Dispatchers.Main) {
-                    favorites_text.text = favorites.joinToString("\n") { it.title }
-                }
+
+        favorites_loading.setIndeterminateDrawable(Wave())
+
+        adapter = activity?.let {
+            MovieAdapter(
+                it
+            ) { movie ->
+                listener?.goToMovieDetails(movie)
             }
-        }
+        }!!
+
+        favorites_grid.adapter = adapter
+
+        favoritesViewModel.loadFavorites(activity!!)
+        favoritesViewModel.favorites.observe(viewLifecycleOwner, Observer(this::loadMovies))
+        favoritesViewModel.isLoading.observe(
+            viewLifecycleOwner,
+            Observer(this::loadingStateChanged)
+        )
+        favoritesViewModel.isEmptyList.observe(viewLifecycleOwner, Observer(this::gridStateChanged))
+
     }
 
     override fun onAttach(context: Context) {
@@ -56,7 +74,20 @@ class FavoritesFragment : Fragment(), CoroutineScope {
     }
 
     interface OnFragmentInteractionListener {
-        fun onFragmentInteraction()
+        fun goToMovieDetails(selectedMovie: Movie)
     }
 
+    private fun loadMovies(movies: List<Movie>) {
+        adapter.movies = movies
+    }
+
+    private fun loadingStateChanged(isLoading: Boolean) {
+        favorites_loading.visibleIf(isLoading)
+        favorites_content.visibleIf(!isLoading)
+    }
+
+    private fun gridStateChanged(isEmptyList: Boolean) {
+        favorites_grid.visibleIf(!isEmptyList)
+        favorites_empty.visibleIf(isEmptyList)
+    }
 }

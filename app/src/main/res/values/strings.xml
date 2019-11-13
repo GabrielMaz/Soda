@@ -3,6 +3,7 @@
 
     <string name="title_discovers">Discovers</string>
     <string name="title_favorites">Favorites</string>
-    <string name="discovers_emptyview">There aren\'t discovers</string>
+    <string name="discovers_emptyview">No movies found</string>
+    <string name="favorites_emptyview">No favorites found</string>
 
 </resources>
