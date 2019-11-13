@@ -79,7 +79,7 @@
             android:layout_height="wrap_content"
             android:layout_below="@id/movie_description"
             android:textColor="@color/yellow"
-            tools:text="Reviews (297)"
+            android:text="Reviews (o.o)"
             android:layout_marginTop="5dp" />
 
     </RelativeLayout>

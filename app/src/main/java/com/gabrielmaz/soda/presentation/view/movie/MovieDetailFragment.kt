@@ -1,6 +1,7 @@
 package com.gabrielmaz.soda.presentation.view.movie
 
 
+import android.content.Context
 import android.graphics.Paint
 import android.os.Bundle
 import android.view.LayoutInflater
@@ -12,11 +13,10 @@ import com.bumptech.glide.Glide
 import com.gabrielmaz.soda.R
 import com.gabrielmaz.soda.data.controllers.RetrofitController
 import com.gabrielmaz.soda.data.models.Movie
-import com.gabrielmaz.soda.data.sources.AppDatabase
 import kotlinx.android.synthetic.main.fragment_movie_detail.*
-import kotlinx.coroutines.Dispatchers
 
 class MovieDetailFragment : Fragment() {
+    private var listener: OnFragmentInteractionListener? = null
     var movie: Movie? = null
 
     private val movieDetailViewModel = MovieDetailViewModel()
@@ -37,6 +37,13 @@ class MovieDetailFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
+        movie?.id?.let { movieDetailViewModel.loadReviews(it) }
+        movieDetailViewModel.reviews.observe(viewLifecycleOwner, Observer(this::reviewsSize))
+        movieDetailViewModel.isFavorite.observe(
+            viewLifecycleOwner,
+            Observer(this::isFavoriteChanged)
+        )
+
         activity?.let {
             Glide
                 .with(it)
@@ -50,7 +57,6 @@ class MovieDetailFragment : Fragment() {
         movie_rate.text = movie?.voteAverage.toString()
         movie_year.text = movie?.releaseDate?.subSequence(0, 4)
         movie_description.text = movie?.overview
-        movie_reviews.paintFlags = Paint.UNDERLINE_TEXT_FLAG
 
         movie?.let { validMovie ->
             activity?.let { activity ->
@@ -63,12 +69,28 @@ class MovieDetailFragment : Fragment() {
             }
         }
 
-        movie?.id?.let { movieDetailViewModel.loadReviews(it) }
-        movieDetailViewModel.reviews.observe(viewLifecycleOwner, Observer(this::reviewsSize))
-        movieDetailViewModel.isFavorite.observe(
-            viewLifecycleOwner,
-            Observer(this::isFavoriteChanged)
-        )
+        movie_reviews.paintFlags = Paint.UNDERLINE_TEXT_FLAG
+        movie_reviews.setOnClickListener(View.OnClickListener {
+            listener?.goToReviews()
+        })
+    }
+
+    override fun onAttach(context: Context) {
+        super.onAttach(context)
+        if (context is OnFragmentInteractionListener) {
+            listener = context
+        } else {
+            throw RuntimeException("$context must implement OnFragmentInteractionListener")
+        }
+    }
+
+    override fun onDetach() {
+        super.onDetach()
+        listener = null
+    }
+
+    interface OnFragmentInteractionListener {
+        fun goToReviews()
     }
 
     private fun isFavoriteChanged(isFavorite: Boolean) {

@@ -1,46 +1,34 @@
 package com.gabrielmaz.soda.presentation.view.movie
 
-import androidx.appcompat.app.AppCompatActivity
+import android.content.Intent
 import android.os.Bundle
+import androidx.appcompat.app.AppCompatActivity
 import com.gabrielmaz.soda.R
 import com.gabrielmaz.soda.data.models.Movie
+import com.gabrielmaz.soda.presentation.view.reviews.ReviewActivity
 
-class MovieDetailActivity : AppCompatActivity() {
-
+class MovieDetailActivity : AppCompatActivity(), MovieDetailFragment.OnFragmentInteractionListener {
     private lateinit var movie: Movie
 
-    private val MOVIE_DETAIL_FRAGMENT_TAG = "MOVIE_DETAIL_FRAGMENT_TAG"
+    override fun goToReviews() {
+        val intent = Intent(this, ReviewActivity::class.java)
+        intent.putExtra(ReviewActivity.MOVIE_ID_TAG, movie.id)
+        startActivity(intent)
+    }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_movie_detail)
 
-        movie = intent.getParcelableExtra("Movie")
+        movie = intent.getParcelableExtra(MOVIE_TAG)
 
-        showDetailFragment()
-    }
-
-    private fun removeActiveFragment() {
-
-        listOf(
-            MOVIE_DETAIL_FRAGMENT_TAG
-        ).forEach { tag ->
-            val fragment = supportFragmentManager.findFragmentByTag(tag)
-            fragment?.let {
-                supportFragmentManager
-                    .beginTransaction()
-                    .remove(it)
-                    .commit()
-            }
-        }
-    }
-
-    private fun showDetailFragment() {
-        supportFragmentManager.popBackStack()
-        removeActiveFragment()
         supportFragmentManager
             .beginTransaction()
-            .add(R.id.container, MovieDetailFragment.newInstance(movie), MOVIE_DETAIL_FRAGMENT_TAG)
+            .add(R.id.container, MovieDetailFragment.newInstance(movie))
             .commit()
+    }
+
+    companion object {
+        const val MOVIE_TAG = "MOVIE_TAG"
     }
 }

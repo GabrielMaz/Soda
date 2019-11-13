@@ -41,10 +41,6 @@ class FavoritesFragment : Fragment(), CoroutineScope {
         }
     }
 
-    fun onButtonPressed() {
-        listener?.onFragmentInteraction()
-    }
-
     override fun onAttach(context: Context) {
         super.onAttach(context)
         if (context is OnFragmentInteractionListener) {
