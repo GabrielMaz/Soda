@@ -1,4 +1,4 @@
-package com.gabrielmaz.soda.data.services
+package com.gabrielmaz.soda.data.service
 
 import com.gabrielmaz.soda.data.models.Discover
 import retrofit2.http.GET

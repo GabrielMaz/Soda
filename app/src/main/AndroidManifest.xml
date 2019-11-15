@@ -12,7 +12,8 @@
         android:roundIcon="@mipmap/ic_soda_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".presentation.view.movie.MovieDetailActivity"></activity>
+        <activity android:name=".presentation.view.reviews.ReviewActivity" />
+        <activity android:name=".presentation.view.movie.MovieDetailActivity" />
         <activity android:name=".presentation.view.MainActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />

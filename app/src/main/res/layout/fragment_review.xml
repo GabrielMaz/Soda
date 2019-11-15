@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    style="@style/Base.Container"
+    android:layout_margin="@dimen/horizontal_margin"
+    android:orientation="vertical"
+    tools:context=".presentation.view.reviews.ReviewFragment">
+
+    <TextView
+        android:id="@+id/reviews_count"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textColor="@color/yellow"
+        android:textSize="24sp"
+        android:text="Allgo"/>
+
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/reviews_list"
+        style="@style/Base.Container"
+        android:layout_marginTop="10dp" />
+
+</LinearLayout>

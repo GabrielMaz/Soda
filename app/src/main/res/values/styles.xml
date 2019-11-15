@@ -10,6 +10,13 @@
         <item name="android:editTextColor">@color/yellow</item>
     </style>
 
+    <style name="Base"/>
+
+    <style name="Base.Container">
+        <item name="android:layout_height">match_parent</item>
+        <item name="android:layout_width">match_parent</item>
+    </style>
+
     <style name="RatingBarStyle" parent="AppTheme">
         <item name="colorAccent">@color/yellow</item>
         <item name="colorPrimary">@color/orange</item>

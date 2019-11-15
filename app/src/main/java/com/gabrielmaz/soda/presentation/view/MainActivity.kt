@@ -2,6 +2,7 @@ package com.gabrielmaz.soda.presentation.view
 
 import android.content.Intent
 import android.os.Bundle
+import android.os.PersistableBundle
 import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.Fragment
 import com.gabrielmaz.soda.R
@@ -18,17 +19,12 @@ class MainActivity : AppCompatActivity(), CoroutineScope,
     DiscoverFragment.OnFragmentInteractionListener,
     FavoritesFragment.OnFragmentInteractionListener {
 
-    private val FAVORITES_FRAGMENT_TAG = "FAVORITES_FRAGMENT_TAG"
-    private val DISCOVER_FRAGMENT_TAG = "DISCOVER_FRAGMENT_TAG"
+    private var currentFragment: String? = null
 
     override fun goToMovieDetails(selectedMovie: Movie) {
         val intent = Intent(this, MovieDetailActivity::class.java)
-        intent.putExtra("Movie", selectedMovie)
+        intent.putExtra(MovieDetailActivity.MOVIE_TAG, selectedMovie)
         startActivity(intent)
-    }
-
-    override fun onFragmentInteraction() {
-
     }
 
     override val coroutineContext: CoroutineContext
@@ -38,12 +34,21 @@ class MainActivity : AppCompatActivity(), CoroutineScope,
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
 
-        load(DISCOVER_FRAGMENT_TAG)
+        currentFragment = savedInstanceState?.getString("currentFragment")
+
+        setBottomNavigationBar()
+
+        if (currentFragment == null)
+            load(DISCOVER_FRAGMENT_TAG)
+    }
+
+    override fun onSaveInstanceState(outState: Bundle) {
+        super.onSaveInstanceState(outState)
+        outState.putString("currentFragment", currentFragment)
     }
 
     private fun load(fragment: String) {
 
-        setBottomNavigationBar()
         when (fragment) {
             DISCOVER_FRAGMENT_TAG -> showFragment(
                 DiscoverFragment(),
@@ -75,6 +80,7 @@ class MainActivity : AppCompatActivity(), CoroutineScope,
     }
 
     private fun showFragment(fragment: Fragment, tag: String) {
+        currentFragment = tag
         removeActiveFragment()
         supportFragmentManager
             .beginTransaction()
@@ -98,6 +104,11 @@ class MainActivity : AppCompatActivity(), CoroutineScope,
 
             true
         }
+    }
+
+    companion object {
+        private const val FAVORITES_FRAGMENT_TAG = "FAVORITES_FRAGMENT_TAG"
+        private const val DISCOVER_FRAGMENT_TAG = "DISCOVER_FRAGMENT_TAG"
     }
 
 }

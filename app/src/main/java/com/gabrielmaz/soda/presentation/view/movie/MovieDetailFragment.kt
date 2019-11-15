@@ -1,6 +1,8 @@
 package com.gabrielmaz.soda.presentation.view.movie
 
 
+import android.content.Context
+import android.graphics.Paint
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
@@ -11,19 +13,18 @@ import com.bumptech.glide.Glide
 import com.gabrielmaz.soda.R
 import com.gabrielmaz.soda.data.controllers.RetrofitController
 import com.gabrielmaz.soda.data.models.Movie
-import com.gabrielmaz.soda.data.sources.AppDatabase
 import kotlinx.android.synthetic.main.fragment_movie_detail.*
-import kotlinx.coroutines.Dispatchers
 
 class MovieDetailFragment : Fragment() {
-    var movie: Movie? = null
+    private var listener: OnFragmentInteractionListener? = null
+    private lateinit var movie: Movie
 
     private val movieDetailViewModel = MovieDetailViewModel()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
-        movie = arguments?.getParcelable(selectedMovieTag)
+        movie = arguments?.getParcelable(selectedMovieTag)!!
     }
 
     override fun onCreateView(
@@ -36,38 +37,66 @@ class MovieDetailFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
+        movie?.id?.let { movieDetailViewModel.loadReviews(it) }
+        movieDetailViewModel.reviews.observe(viewLifecycleOwner, Observer(this::reviewsSize))
+        movieDetailViewModel.isFavorite.observe(
+            viewLifecycleOwner,
+            Observer(this::isFavoriteChanged)
+        )
+
         activity?.let {
             Glide
                 .with(it)
-                .load("${RetrofitController.baseImageUrl}${movie?.posterPath}")
+                .load("${RetrofitController.baseImageUrl}${movie.posterPath}")
                 .centerCrop()
                 .placeholder(R.drawable.ic_place_holder)
                 .into(movie_image)
         }
 
-        movie_title.text = movie?.title
-        movie_rate.text = movie?.voteAverage.toString()
-        movie_year.text = movie?.releaseDate?.subSequence(0, 4)
-        movie_description.text = movie?.overview
+        movie_title.text = movie.title
+        movie_rate.text = movie.voteAverage.toString()
+        movie_year.text = movie.releaseDate.subSequence(0, 4)
+        movie_description.text = movie.overview
 
-        movie?.let { validMovie ->
-            activity?.let { activity ->
-                movieDetailViewModel.setMovie(activity, validMovie)
-            }
-            movie_favorite_button.setOnClickListener {
-                activity?.let { activity ->
-                    movieDetailViewModel.toggleFavorite(activity, validMovie)
-                }
-            }
+        movieDetailViewModel.setMovie(activity!!, movie)
+        movie_favorite_button.setOnClickListener {
+            movieDetailViewModel.toggleFavorite(activity!!, movie)
+
         }
 
-        movieDetailViewModel.isFavorite.observe(viewLifecycleOwner, Observer(this::isFavoriteChanged))
+        movie_reviews.paintFlags = Paint.UNDERLINE_TEXT_FLAG
+        movie_reviews.setOnClickListener(View.OnClickListener {
+            listener?.goToReviews()
+        })
+    }
+
+    override fun onAttach(context: Context) {
+        super.onAttach(context)
+        if (context is OnFragmentInteractionListener) {
+            listener = context
+        } else {
+            throw RuntimeException("$context must implement OnFragmentInteractionListener")
+        }
+    }
+
+    override fun onDetach() {
+        super.onDetach()
+        listener = null
+    }
+
+    interface OnFragmentInteractionListener {
+        fun goToReviews()
     }
 
     private fun isFavoriteChanged(isFavorite: Boolean) {
         movie_favorite_button.setImageResource(
             if (isFavorite) R.drawable.ic_favorite_red else R.drawable.ic_favorite
         )
+    }
+
+    private fun reviewsSize(size: Int) {
+        val reviewsText = "Reviews ($size)"
+        movie_reviews.text = reviewsText
     }
 
     companion object {

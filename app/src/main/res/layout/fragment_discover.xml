@@ -7,25 +7,28 @@
     android:orientation="vertical"
     tools:context=".presentation.view.discover.DiscoverFragment">
 
+    <SearchView
+        android:id="@+id/discover_search"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:inputType="textCapSentences" />
+
+    <RatingBar
+        android:id="@+id/discover_ratingbar"
+        style="@style/RatingBarStyle"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/discover_search"
+        android:layout_centerHorizontal="true"
+        android:stepSize="1" />
+
     <LinearLayout
         android:id="@+id/discover_content"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:orientation="vertical"
-        android:gravity="center_horizontal">
-
-        <SearchView
-            android:id="@+id/discover_search"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:inputType="textCapSentences" />
-
-        <RatingBar
-            android:id="@+id/discover_ratingbar"
-            style="@style/RatingBarStyle"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:stepSize="1" />
+        android:layout_below="@id/discover_ratingbar"
+        android:gravity="center_horizontal"
+        android:orientation="vertical">
 
         <GridView
             android:id="@+id/discover_grid"
@@ -51,6 +54,7 @@
                 android:layout_centerInParent="true"
                 android:layout_gravity="center"
                 android:text="@string/discovers_emptyview"
+                android:textColor="@color/yellow"
                 android:textSize="20sp" />
         </RelativeLayout>
 
