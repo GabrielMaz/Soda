@@ -15,12 +15,13 @@ import com.gabrielmaz.soda.presentation.helpers.visibleIf
 import com.gabrielmaz.soda.presentation.view.shared.MovieAdapter
 import com.github.ybq.android.spinkit.style.Wave
 import kotlinx.android.synthetic.main.fragment_discover.*
+import org.koin.androidx.viewmodel.ext.android.viewModel
 
 class DiscoverFragment : Fragment() {
     private var listener: OnFragmentInteractionListener? = null
 
     private lateinit var adapter: MovieAdapter
-    private val discoverViewModel = DiscoverViewModel()
+    private val discoverViewModel: DiscoverViewModel by viewModel()
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,

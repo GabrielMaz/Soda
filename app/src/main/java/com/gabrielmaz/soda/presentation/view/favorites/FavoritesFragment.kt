@@ -9,6 +9,7 @@ import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.gabrielmaz.soda.R
+import com.gabrielmaz.soda.data.models.Favorite
 import com.gabrielmaz.soda.data.models.Movie
 import com.gabrielmaz.soda.presentation.helpers.visibleIf
 import com.gabrielmaz.soda.presentation.view.shared.MovieAdapter
@@ -81,8 +82,8 @@ class FavoritesFragment : Fragment(), CoroutineScope {
         fun goToMovieDetails(selectedMovie: Movie)
     }
 
-    private fun loadMovies(movies: List<Movie>) {
-        adapter.movies = movies
+    private fun loadMovies(favorites: List<Favorite>) {
+        adapter.movies = favorites.map { f -> Movie(f.id, f.posterPath, f.overview, f.releaseDate, f.title, f.voteAverage) }
     }
 
     private fun loadingStateChanged(isLoading: Boolean) {

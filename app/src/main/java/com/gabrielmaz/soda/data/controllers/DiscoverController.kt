@@ -2,9 +2,7 @@ package com.gabrielmaz.soda.data.controllers
 
 import com.gabrielmaz.soda.data.service.DiscoverService
 
-class DiscoverController {
-    private val discoverService = RetrofitController.retrofit.create(DiscoverService::class.java)
-
+class DiscoverController(private val discoverService: DiscoverService) {
     suspend fun getDiscovers() = discoverService.getDiscovers(RetrofitController.apiKey)
 
     suspend fun getDiscoversByName(name: String) = discoverService.getDiscoversByName(RetrofitController.apiKey, name)

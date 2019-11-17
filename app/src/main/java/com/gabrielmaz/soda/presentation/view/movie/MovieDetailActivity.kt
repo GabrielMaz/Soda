@@ -22,10 +22,12 @@ class MovieDetailActivity : AppCompatActivity(), MovieDetailFragment.OnFragmentI
 
         movie = intent.getParcelableExtra(MOVIE_TAG)
 
-        supportFragmentManager
-            .beginTransaction()
-            .add(R.id.container, MovieDetailFragment.newInstance(movie))
-            .commit()
+        if (savedInstanceState == null) {
+            supportFragmentManager
+                .beginTransaction()
+                .add(R.id.container, MovieDetailFragment.newInstance(movie))
+                .commit()
+        }
     }
 
     companion object {

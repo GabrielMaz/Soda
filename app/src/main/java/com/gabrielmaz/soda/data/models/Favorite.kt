@@ -8,7 +8,7 @@ import kotlinx.android.parcel.Parcelize
 
 @Entity
 @Parcelize
-data class Movie(
+data class Favorite(
     @PrimaryKey val id: Int,
     @ColumnInfo(name = "poster_path") val posterPath: String?,
     @ColumnInfo val overview: String,

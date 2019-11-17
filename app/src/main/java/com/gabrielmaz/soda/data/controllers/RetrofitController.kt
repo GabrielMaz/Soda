@@ -7,24 +7,19 @@ import okhttp3.OkHttpClient
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
 
-object RetrofitController {
-    const val baseUrl = "https://api.themoviedb.org/3/"
-    const val baseImageUrl = "https://image.tmdb.org/t/p/w500"
-    const val apiKey =
-        "6d6e6ac0a910598652be5994ade22a61"
+class RetrofitController(private val gsonConverterFactory: GsonConverterFactory) {
+    companion object {
+        const val baseUrl = "https://api.themoviedb.org/3/"
+        const val baseImageUrl = "https://image.tmdb.org/t/p/w500"
+        const val apiKey = "6d6e6ac0a910598652be5994ade22a61"
+    }
 
-    val retrofit: Retrofit = Retrofit.Builder()
-        .baseUrl(baseUrl)
-        .client(httpClient)
-        .addConverterFactory(gsonConverterFactory)
-        .build()
-
-    private val gsonConverterFactory
-        get() = GsonConverterFactory.create(
-            GsonBuilder()
-                .setFieldNamingPolicy(FieldNamingPolicy.LOWER_CASE_WITH_UNDERSCORES)
-                .create()
-        )
+    fun initRetrofit() =
+        Retrofit.Builder()
+            .baseUrl(baseUrl)
+            .client(httpClient)
+            .addConverterFactory(gsonConverterFactory)
+            .build()
 
     private val httpClient
         get() = OkHttpClient.Builder()
