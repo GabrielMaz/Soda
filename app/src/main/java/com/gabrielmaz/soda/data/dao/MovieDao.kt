@@ -5,7 +5,7 @@ import com.gabrielmaz.soda.data.models.Movie
 
 @Dao
 interface MovieDao {
-    @Query("SELECT * FROM movie")
+    @Query("SELECT * FROM movie ORDER BY popularity DESC")
     suspend fun getAll(): List<Movie>
 
     @Insert

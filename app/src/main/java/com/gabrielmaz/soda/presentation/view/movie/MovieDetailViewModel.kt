@@ -50,7 +50,8 @@ class MovieDetailViewModel(
                     movie.overview,
                     movie.releaseDate,
                     movie.title,
-                    movie.voteAverage
+                    movie.voteAverage,
+                    movie.popularity
                 )
 
                 if (newValue) {

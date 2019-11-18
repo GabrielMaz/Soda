@@ -83,7 +83,7 @@ class FavoritesFragment : Fragment(), CoroutineScope {
     }
 
     private fun loadMovies(favorites: List<Favorite>) {
-        adapter.movies = favorites.map { f -> Movie(f.id, f.posterPath, f.overview, f.releaseDate, f.title, f.voteAverage) }
+        adapter.movies = favorites.map { f -> Movie(f.id, f.posterPath, f.overview, f.releaseDate, f.title, f.voteAverage, f.popularity) }
     }
 
     private fun loadingStateChanged(isLoading: Boolean) {

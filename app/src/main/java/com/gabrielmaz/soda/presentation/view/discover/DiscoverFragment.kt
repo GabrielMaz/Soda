@@ -56,16 +56,19 @@ class DiscoverFragment : Fragment() {
         })
 
         discover_ratingbar.onRatingBarChangeListener =
-            RatingBar.OnRatingBarChangeListener { _, rating, _ ->
-                discoverViewModel.loadMoviesByRate(
-                    rating
-                )
+            RatingBar.OnRatingBarChangeListener { _, rating, fromUser ->
+                if (fromUser) {
+                    discoverViewModel.loadMoviesByRate(
+                        rating
+                    )
+                }
             }
 
         discoverViewModel.loadMovies()
         discoverViewModel.movies.observe(viewLifecycleOwner, Observer(this::loadMovies))
         discoverViewModel.isLoading.observe(viewLifecycleOwner, Observer(this::loadingStateChanged))
         discoverViewModel.isEmptyList.observe(viewLifecycleOwner, Observer(this::gridStateChanged))
+        discoverViewModel.errorMessage.observe(viewLifecycleOwner, Observer(this::errorMessageChanged))
     }
 
     override fun onAttach(context: Context) {
@@ -88,6 +91,7 @@ class DiscoverFragment : Fragment() {
 
     private fun loadMovies(movies: ArrayList<Movie>) {
         adapter.movies = movies
+        discover_emptyview_message.text = getString(R.string.discovers_emptyview)
     }
 
     private fun loadingStateChanged(isLoading: Boolean) {
@@ -98,5 +102,9 @@ class DiscoverFragment : Fragment() {
     private fun gridStateChanged(isEmptyList: Boolean) {
         discover_grid.visibleIf(!isEmptyList)
         discover_emptyview.visibleIf(isEmptyList)
+    }
+
+    private fun errorMessageChanged(message: String) {
+        discover_emptyview_message.text = message
     }
 }

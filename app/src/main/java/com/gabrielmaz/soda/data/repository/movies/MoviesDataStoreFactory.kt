@@ -5,9 +5,9 @@ import com.gabrielmaz.soda.data.dao.MovieDao
 import com.gabrielmaz.soda.data.helper.networking.NetworkingManager
 
 open class MoviesDataStoreFactory(
-    var controller: DiscoverController, // use service?
-    var dao: MovieDao,
-    var networkingManager: NetworkingManager
+    private var controller: DiscoverController,
+    private var dao: MovieDao,
+    private var networkingManager: NetworkingManager
 ) {
 
     open var moviesDataStoreFactory: MoviesDataStore
