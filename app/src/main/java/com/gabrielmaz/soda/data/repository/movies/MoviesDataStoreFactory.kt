@@ -1,11 +1,11 @@
 package com.gabrielmaz.soda.data.repository.movies
 
-import com.gabrielmaz.soda.data.controllers.DiscoverController
+import com.gabrielmaz.soda.data.controllers.MovieController
 import com.gabrielmaz.soda.data.dao.MovieDao
 import com.gabrielmaz.soda.data.helper.networking.NetworkingManager
 
 open class MoviesDataStoreFactory(
-    private var controller: DiscoverController,
+    private var controller: MovieController,
     private var dao: MovieDao,
     private var networkingManager: NetworkingManager
 ) {

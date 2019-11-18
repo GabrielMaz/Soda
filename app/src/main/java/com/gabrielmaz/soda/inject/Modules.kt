@@ -1,6 +1,6 @@
 package com.gabrielmaz.soda.inject
 
-import com.gabrielmaz.soda.data.controllers.DiscoverController
+import com.gabrielmaz.soda.data.controllers.MovieController
 import com.gabrielmaz.soda.data.controllers.GenreController
 import com.gabrielmaz.soda.data.controllers.RetrofitController
 import com.gabrielmaz.soda.data.controllers.ReviewController
@@ -8,7 +8,7 @@ import com.gabrielmaz.soda.data.helper.networking.NetworkingManager
 import com.gabrielmaz.soda.data.repository.MoviesSourceDataRepository
 import com.gabrielmaz.soda.data.repository.MoviesSourceRepository
 import com.gabrielmaz.soda.data.repository.movies.MoviesDataStoreFactory
-import com.gabrielmaz.soda.data.service.DiscoverService
+import com.gabrielmaz.soda.data.service.MovieService
 import com.gabrielmaz.soda.data.service.ReviewService
 import com.gabrielmaz.soda.data.service.GenresService
 import com.gabrielmaz.soda.data.sources.AppDatabase
@@ -35,8 +35,8 @@ var networkModule = module {
     single { RetrofitController(get()) }
     single<Retrofit> { get<RetrofitController>().initRetrofit() }
     single {
-        val service = get<Retrofit>().create(DiscoverService::class.java)
-        DiscoverController(service)
+        val service = get<Retrofit>().create(MovieService::class.java)
+        MovieController(service)
     }
     single {
         val service = get<Retrofit>().create(ReviewService::class.java)
