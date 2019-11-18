@@ -3,7 +3,7 @@ package com.gabrielmaz.soda.presentation.view.discover
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
-import com.gabrielmaz.soda.data.controllers.DiscoverController
+import com.gabrielmaz.soda.data.controllers.MovieController
 import com.gabrielmaz.soda.data.controllers.GenreController
 import com.gabrielmaz.soda.data.dao.GenreDao
 import com.gabrielmaz.soda.data.dao.MovieDao
@@ -14,7 +14,7 @@ import kotlinx.coroutines.*
 import kotlin.coroutines.CoroutineContext
 
 class DiscoverViewModel(
-    private val discoverController: DiscoverController,
+    private val movieController: MovieController,
     private val moviesSourceRepository: MoviesSourceRepository,
     private val movieDao: MovieDao,
     private val networkingManager: NetworkingManager,
@@ -94,7 +94,7 @@ class DiscoverViewModel(
                 localIsLoading.postValue(true)
                 localIsEmptyList.postValue(true)
                 try {
-                    val movies = discoverController.getDiscoversByName(name).results
+                    val movies = movieController.getMoviesByName(name)
                     localMovies.postValue(movies)
                     localIsEmptyList.postValue(movies.isEmpty())
                     localIsLoading.postValue(false)
@@ -142,7 +142,7 @@ class DiscoverViewModel(
             localIsLoading.postValue(true)
             localIsEmptyList.postValue(true)
             try {
-                val movies = discoverController.getDiscoversByRate(min, max).results
+                val movies = movieController.getMoviesByRate(min, max)
                 localMovies.postValue(movies)
                 localIsEmptyList.postValue(movies.isEmpty())
                 localIsLoading.postValue(false)
