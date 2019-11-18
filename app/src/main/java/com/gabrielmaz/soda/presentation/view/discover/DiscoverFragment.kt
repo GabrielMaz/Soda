@@ -44,14 +44,21 @@ class DiscoverFragment : Fragment() {
         }!!
         discover_grid.adapter = adapter
 
+        var disableQueryTextListener = false
+
         discover_search.setOnQueryTextListener(object : OnQueryTextListener {
             override fun onQueryTextSubmit(query: String): Boolean {
                 return false
             }
 
             override fun onQueryTextChange(newText: String): Boolean {
-                discoverViewModel.loadMoviesByName(newText)
-                return true
+                return if (disableQueryTextListener) {
+                    false
+                } else {
+                    discoverViewModel.loadMoviesByName(newText)
+                    discover_ratingbar.rating = 0f
+                    true
+                }
             }
         })
 
@@ -61,6 +68,9 @@ class DiscoverFragment : Fragment() {
                     discoverViewModel.loadMoviesByRate(
                         rating
                     )
+                    disableQueryTextListener = true
+                    discover_search.setQuery("", false)
+                    disableQueryTextListener = false
                 }
             }
 

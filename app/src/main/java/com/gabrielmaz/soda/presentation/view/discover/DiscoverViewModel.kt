@@ -117,7 +117,6 @@ class DiscoverViewModel(
                 max = 10
             }
 
-            delay(500)
             localIsLoading.postValue(true)
             localIsEmptyList.postValue(true)
             try {
