@@ -7,12 +7,24 @@
     tools:context=".presentation.view.reviews.ReviewFragment">
 
     <TextView
-        android:id="@+id/reviews_count"
-        android:layout_width="wrap_content"
+        android:id="@+id/reviews_title"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:gravity="center"
         android:textColor="@color/yellow"
         android:textSize="24sp"
-        android:text="Allgo"/>
+        android:textStyle="bold"
+        tools:text="Joker" />
+
+    <TextView
+        android:id="@+id/reviews_count"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:gravity="center"
+        android:text="Title (o.o)"
+        android:textColor="@color/colorPrimaryDark"
+        android:textSize="20sp"
+        android:textStyle="bold" />
 
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/reviews_list"

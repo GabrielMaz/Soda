@@ -6,9 +6,12 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
+import androidx.recyclerview.widget.DividerItemDecoration
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.gabrielmaz.soda.R
+import com.gabrielmaz.soda.data.models.Movie
 import com.gabrielmaz.soda.data.models.Review
+import com.gabrielmaz.soda.presentation.view.movie.MovieDetailActivity
 import kotlinx.android.synthetic.main.fragment_review.*
 import org.koin.androidx.viewmodel.ext.android.viewModel
 
@@ -26,14 +29,21 @@ class ReviewFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        val movieId = arguments?.getInt(ReviewActivity.MOVIE_ID_TAG)
+        val movie = arguments?.getParcelable<Movie>(MovieDetailActivity.MOVIE_TAG)
 
+        reviews_title.text = movie?.title ?: ""
         adapter = ReviewAdapter()
         reviews_list.layoutManager = LinearLayoutManager(activity)
+        reviews_list.addItemDecoration(
+            DividerItemDecoration(
+                activity,
+                DividerItemDecoration.VERTICAL
+            )
+        )
         reviews_list.adapter = adapter
 
-        if (movieId != null) {
-            reviewViewModel.loadReviews(movieId)
+        if (movie != null) {
+            reviewViewModel.loadReviews(movie.id)
         }
 
         reviewViewModel.reviews.observe(viewLifecycleOwner, Observer(this::reviewsChanged))
@@ -41,15 +51,16 @@ class ReviewFragment : Fragment() {
 
     private fun reviewsChanged(reviews: ArrayList<Review>) {
         adapter.reviews = reviews
+        reviews_count.text = "Reviews (${reviews.size})"
     }
 
     companion object {
         @JvmStatic
-        fun newInstance(movieId: Int?) =
+        fun newInstance(movie: Movie?) =
             ReviewFragment().apply {
                 arguments = Bundle().apply {
-                    if (movieId != null) {
-                        putInt(ReviewActivity.MOVIE_ID_TAG, movieId)
+                    if (movie != null) {
+                        putParcelable(MovieDetailActivity.MOVIE_TAG, movie)
                     }
                 }
             }
