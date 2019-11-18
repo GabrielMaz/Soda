@@ -12,10 +12,12 @@ class ReviewActivity : AppCompatActivity() {
 
         val movieId = intent.getIntExtra(MOVIE_ID_TAG, 0)
 
-        supportFragmentManager
-            .beginTransaction()
-            .add(R.id.container, ReviewFragment.newInstance(movieId))
-            .commit()
+        if (savedInstanceState == null) {
+            supportFragmentManager
+                .beginTransaction()
+                .add(R.id.container, ReviewFragment.newInstance(movieId))
+                .commit()
+        }
     }
 
     companion object {

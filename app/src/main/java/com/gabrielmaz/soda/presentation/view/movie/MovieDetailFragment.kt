@@ -14,12 +14,13 @@ import com.gabrielmaz.soda.R
 import com.gabrielmaz.soda.data.controllers.RetrofitController
 import com.gabrielmaz.soda.data.models.Movie
 import kotlinx.android.synthetic.main.fragment_movie_detail.*
+import org.koin.androidx.viewmodel.ext.android.viewModel
 
 class MovieDetailFragment : Fragment() {
     private var listener: OnFragmentInteractionListener? = null
     private lateinit var movie: Movie
 
-    private val movieDetailViewModel = MovieDetailViewModel()
+    private val movieDetailViewModel: MovieDetailViewModel by viewModel()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -37,7 +38,7 @@ class MovieDetailFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        movie?.id?.let { movieDetailViewModel.loadReviews(it) }
+        movieDetailViewModel.loadReviews(movie.id)
         movieDetailViewModel.reviews.observe(viewLifecycleOwner, Observer(this::reviewsSize))
         movieDetailViewModel.isFavorite.observe(
             viewLifecycleOwner,
@@ -58,16 +59,16 @@ class MovieDetailFragment : Fragment() {
         movie_year.text = movie.releaseDate.subSequence(0, 4)
         movie_description.text = movie.overview
 
-        movieDetailViewModel.setMovie(activity!!, movie)
+        movieDetailViewModel.setMovie(movie)
         movie_favorite_button.setOnClickListener {
-            movieDetailViewModel.toggleFavorite(activity!!, movie)
+            movieDetailViewModel.toggleFavorite(movie)
 
         }
 
         movie_reviews.paintFlags = Paint.UNDERLINE_TEXT_FLAG
-        movie_reviews.setOnClickListener(View.OnClickListener {
+        movie_reviews.setOnClickListener {
             listener?.goToReviews()
-        })
+        }
     }
 
     override fun onAttach(context: Context) {

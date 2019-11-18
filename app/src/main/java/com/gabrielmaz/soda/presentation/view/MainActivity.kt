@@ -19,8 +19,6 @@ class MainActivity : AppCompatActivity(), CoroutineScope,
     DiscoverFragment.OnFragmentInteractionListener,
     FavoritesFragment.OnFragmentInteractionListener {
 
-    private var currentFragment: String? = null
-
     override fun goToMovieDetails(selectedMovie: Movie) {
         val intent = Intent(this, MovieDetailActivity::class.java)
         intent.putExtra(MovieDetailActivity.MOVIE_TAG, selectedMovie)
@@ -34,17 +32,11 @@ class MainActivity : AppCompatActivity(), CoroutineScope,
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
 
-        currentFragment = savedInstanceState?.getString("currentFragment")
-
         setBottomNavigationBar()
 
-        if (currentFragment == null)
+        if (savedInstanceState == null) {
             load(DISCOVER_FRAGMENT_TAG)
-    }
-
-    override fun onSaveInstanceState(outState: Bundle) {
-        super.onSaveInstanceState(outState)
-        outState.putString("currentFragment", currentFragment)
+        }
     }
 
     private fun load(fragment: String) {
@@ -80,7 +72,6 @@ class MainActivity : AppCompatActivity(), CoroutineScope,
     }
 
     private fun showFragment(fragment: Fragment, tag: String) {
-        currentFragment = tag
         removeActiveFragment()
         supportFragmentManager
             .beginTransaction()

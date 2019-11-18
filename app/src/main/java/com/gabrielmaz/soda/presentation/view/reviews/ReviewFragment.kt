@@ -10,10 +10,11 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import com.gabrielmaz.soda.R
 import com.gabrielmaz.soda.data.models.Review
 import kotlinx.android.synthetic.main.fragment_review.*
+import org.koin.androidx.viewmodel.ext.android.viewModel
 
 class ReviewFragment : Fragment() {
     private lateinit var adapter: ReviewAdapter
-    private val reviewViewModel = ReviewViewModel()
+    private val reviewViewModel: ReviewViewModel by viewModel()
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,

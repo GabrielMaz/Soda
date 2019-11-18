@@ -11,11 +11,9 @@ import kotlinx.coroutines.launch
 import java.lang.Exception
 import kotlin.coroutines.CoroutineContext
 
-class ReviewViewModel : ViewModel(), CoroutineScope {
+class ReviewViewModel(private val reviewController: ReviewController) : ViewModel(), CoroutineScope {
     override val coroutineContext: CoroutineContext
         get() = Dispatchers.Main
-
-    private val reviewController = ReviewController()
 
     private val localReviews = MutableLiveData<ArrayList<Review>>()
 

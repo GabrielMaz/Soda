@@ -6,12 +6,10 @@ import android.view.ViewGroup
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import com.gabrielmaz.soda.R
-import com.gabrielmaz.soda.data.models.Movie
 import com.gabrielmaz.soda.data.models.Review
 import kotlinx.android.synthetic.main.item_review.view.*
 
-class ReviewAdapter() :
-    RecyclerView.Adapter<ReviewAdapter.ReviewViewHolder>() {
+class ReviewAdapter : RecyclerView.Adapter<ReviewAdapter.ReviewViewHolder>() {
 
     var reviews = arrayListOf<Review>()
         set(value) {

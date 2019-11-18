@@ -14,8 +14,8 @@ import kotlinx.android.synthetic.main.item_discover.view.*
 class MovieAdapter(
     private val context: Context,
     private var onClick: (Movie) -> Unit
-) :
-    BaseAdapter() {
+) : BaseAdapter() {
+
     var movies = listOf<Movie>()
         set(value) {
             field = value
@@ -25,8 +25,8 @@ class MovieAdapter(
     override fun getView(position: Int, convertView: View?, parent: ViewGroup?): View {
 
         val item = movies[position]
-        val inflator = context.getSystemService(Context.LAYOUT_INFLATER_SERVICE) as LayoutInflater
-        val view = inflator.inflate(R.layout.item_discover, null)
+        val inflater = context.getSystemService(Context.LAYOUT_INFLATER_SERVICE) as LayoutInflater
+        val view = inflater.inflate(R.layout.item_discover, null)
 
         view.item_discover_title.text = item.title
         if (item.releaseDate.length > 4) {

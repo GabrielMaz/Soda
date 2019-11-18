@@ -4,12 +4,24 @@ import android.app.Activity
 import android.app.Application
 import android.content.Intent
 import android.os.Bundle
+import com.gabrielmaz.soda.inject.databaseModule
+import com.gabrielmaz.soda.inject.moviesModule
+import com.gabrielmaz.soda.inject.networkModule
 import com.gabrielmaz.soda.presentation.view.MainActivity
+import org.koin.android.ext.koin.androidContext
+import org.koin.android.ext.koin.androidLogger
+import org.koin.core.context.startKoin
 import java.lang.ref.WeakReference
 
 class App : Application() {
     override fun onCreate() {
         super.onCreate()
+
+        startKoin {
+            androidLogger()
+            androidContext(this@App)
+            modules(listOf(networkModule, moviesModule, databaseModule))
+        }
 
         listenActivityCallbacks()
     }

@@ -5,18 +5,16 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import com.gabrielmaz.soda.data.controllers.DiscoverController
 import com.gabrielmaz.soda.data.models.Movie
-import com.gabrielmaz.soda.data.models.Review
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import kotlin.coroutines.CoroutineContext
 
-class DiscoverViewModel : ViewModel(),
-    CoroutineScope {
+class DiscoverViewModel(private val discoverController: DiscoverController) : ViewModel(), CoroutineScope {
+
     override val coroutineContext: CoroutineContext
         get() = Dispatchers.Main
 
-    private val discoverController = DiscoverController()
     private val localMovies = MutableLiveData<ArrayList<Movie>>()
     private val localIsLoading = MutableLiveData<Boolean>()
     private val localIsEmptyList = MutableLiveData<Boolean>()
