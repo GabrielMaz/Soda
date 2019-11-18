@@ -30,12 +30,14 @@ class ReviewAdapter : RecyclerView.Adapter<ReviewAdapter.ReviewViewHolder>() {
     override fun onBindViewHolder(holder: ReviewViewHolder, position: Int) {
         val review = reviews[position]
 
+        holder.position.text = (position + 1).toString()
         holder.author.text = review.author
         holder.content.text = review.content
     }
 
 
     inner class ReviewViewHolder(mView: View) : RecyclerView.ViewHolder(mView) {
+        val position: TextView = mView.item_review_position
         val author: TextView = mView.item_review_author
         val content: TextView = mView.item_review_content
     }

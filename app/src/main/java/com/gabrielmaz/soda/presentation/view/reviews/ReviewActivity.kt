@@ -3,6 +3,8 @@ package com.gabrielmaz.soda.presentation.view.reviews
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
 import com.gabrielmaz.soda.R
+import com.gabrielmaz.soda.data.models.Movie
+import com.gabrielmaz.soda.presentation.view.movie.MovieDetailActivity
 
 class ReviewActivity : AppCompatActivity() {
 
@@ -10,17 +12,13 @@ class ReviewActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_review)
 
-        val movieId = intent.getIntExtra(MOVIE_ID_TAG, 0)
+        val movie = intent.getParcelableExtra<Movie>(MovieDetailActivity.MOVIE_TAG)
 
         if (savedInstanceState == null) {
             supportFragmentManager
                 .beginTransaction()
-                .add(R.id.container, ReviewFragment.newInstance(movieId))
+                .add(R.id.container, ReviewFragment.newInstance(movie))
                 .commit()
         }
-    }
-
-    companion object {
-        const val MOVIE_ID_TAG = "MOVIE_ID_TAG"
     }
 }
