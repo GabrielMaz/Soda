@@ -8,7 +8,7 @@ interface FavoriteDao {
     @Query("SELECT * FROM favorite where id = :id")
     suspend fun getFavorite(id: Int): Favorite?
 
-    @Query("SELECT * FROM favorite")
+    @Query("SELECT * FROM favorite ORDER BY popularity DESC")
     suspend fun getFavorites(): List<Favorite>
 
     @Insert

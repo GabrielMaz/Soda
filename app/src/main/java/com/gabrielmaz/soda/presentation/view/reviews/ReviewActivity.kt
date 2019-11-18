@@ -12,7 +12,7 @@ class ReviewActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_review)
 
-        val movie = intent.getParcelableExtra<Movie>(MovieDetailActivity.MOVIE_TAG)
+        val movie = intent.getParcelableExtra<Movie>(MOVIE_TAG)
 
         if (savedInstanceState == null) {
             supportFragmentManager
@@ -20,5 +20,9 @@ class ReviewActivity : AppCompatActivity() {
                 .add(R.id.container, ReviewFragment.newInstance(movie))
                 .commit()
         }
+    }
+
+    companion object {
+        const val MOVIE_TAG = "MOVIE"
     }
 }

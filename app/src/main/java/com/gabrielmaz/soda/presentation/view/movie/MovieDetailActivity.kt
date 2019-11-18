@@ -12,7 +12,7 @@ class MovieDetailActivity : AppCompatActivity(), MovieDetailFragment.OnFragmentI
 
     override fun goToReviews() {
         val intent = Intent(this, ReviewActivity::class.java)
-        intent.putExtra(MOVIE_TAG, movie)
+        intent.putExtra(ReviewActivity.MOVIE_TAG, movie)
         startActivity(intent)
     }
 

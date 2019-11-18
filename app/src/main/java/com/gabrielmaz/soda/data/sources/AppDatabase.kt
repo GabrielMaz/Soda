@@ -9,7 +9,7 @@ import com.gabrielmaz.soda.data.dao.MovieDao
 import com.gabrielmaz.soda.data.models.Favorite
 import com.gabrielmaz.soda.data.models.Movie
 
-@Database(entities = [Movie::class, Favorite::class], version = 2, exportSchema = false)
+@Database(entities = [Movie::class, Favorite::class], version = 5, exportSchema = false)
 abstract class AppDatabase : RoomDatabase() {
     abstract fun movieDao(): MovieDao
     abstract fun favoriteDao(): FavoriteDao

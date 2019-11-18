@@ -14,5 +14,6 @@ data class Movie(
     @ColumnInfo val overview: String,
     @ColumnInfo(name = "release_date") val releaseDate: String,
     @ColumnInfo val title: String,
-    @ColumnInfo val voteAverage: Float
+    @ColumnInfo val voteAverage: Float,
+    @ColumnInfo val popularity: Float
 ) : Parcelable

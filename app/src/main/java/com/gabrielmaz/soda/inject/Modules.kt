@@ -49,9 +49,9 @@ var databaseModule = module {
 
 var moviesModule = module {
     single { MoviesDataStoreFactory(get(), get(), get()) }
-    single<MoviesSourceRepository> { MoviesSourceDataRepository(get()) } // TODO unused: figure out how to use this with filters
+    single<MoviesSourceRepository> { MoviesSourceDataRepository(get()) }
 
-    viewModel { DiscoverViewModel(get()) }
+    viewModel { DiscoverViewModel(get(), get(), get(), get()) }
     viewModel { MovieDetailViewModel(get(), get()) }
     viewModel { ReviewViewModel(get()) }
 }
