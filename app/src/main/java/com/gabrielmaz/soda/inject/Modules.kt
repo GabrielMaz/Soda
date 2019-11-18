@@ -1,6 +1,7 @@
 package com.gabrielmaz.soda.inject
 
 import com.gabrielmaz.soda.data.controllers.DiscoverController
+import com.gabrielmaz.soda.data.controllers.GenreController
 import com.gabrielmaz.soda.data.controllers.RetrofitController
 import com.gabrielmaz.soda.data.controllers.ReviewController
 import com.gabrielmaz.soda.data.helper.networking.NetworkingManager
@@ -9,6 +10,7 @@ import com.gabrielmaz.soda.data.repository.MoviesSourceRepository
 import com.gabrielmaz.soda.data.repository.movies.MoviesDataStoreFactory
 import com.gabrielmaz.soda.data.service.DiscoverService
 import com.gabrielmaz.soda.data.service.ReviewService
+import com.gabrielmaz.soda.data.service.GenresService
 import com.gabrielmaz.soda.data.sources.AppDatabase
 import com.gabrielmaz.soda.presentation.view.discover.DiscoverViewModel
 import com.gabrielmaz.soda.presentation.view.movie.MovieDetailViewModel
@@ -40,18 +42,23 @@ var networkModule = module {
         val service = get<Retrofit>().create(ReviewService::class.java)
         ReviewController(service)
     }
+    single {
+        val service = get<Retrofit>().create(GenresService::class.java)
+        GenreController(service)
+    }
 }
 
 var databaseModule = module {
     single { AppDatabase.getInstance(get()).movieDao() }
     single { AppDatabase.getInstance(get()).favoriteDao() }
+    single { AppDatabase.getInstance(get()).genreDao() }
 }
 
 var moviesModule = module {
     single { MoviesDataStoreFactory(get(), get(), get()) }
     single<MoviesSourceRepository> { MoviesSourceDataRepository(get()) }
 
-    viewModel { DiscoverViewModel(get(), get(), get(), get()) }
+    viewModel { DiscoverViewModel(get(), get(), get(), get(), get(), get()) }
     viewModel { MovieDetailViewModel(get(), get()) }
     viewModel { ReviewViewModel(get()) }
 }

@@ -68,7 +68,14 @@ class DiscoverFragment : Fragment() {
         discoverViewModel.movies.observe(viewLifecycleOwner, Observer(this::loadMovies))
         discoverViewModel.isLoading.observe(viewLifecycleOwner, Observer(this::loadingStateChanged))
         discoverViewModel.isEmptyList.observe(viewLifecycleOwner, Observer(this::gridStateChanged))
-        discoverViewModel.errorMessage.observe(viewLifecycleOwner, Observer(this::errorMessageChanged))
+        discoverViewModel.errorMessage.observe(
+            viewLifecycleOwner,
+            Observer(this::errorMessageChanged)
+        )
+        discoverViewModel.isNetworkAvailable.observe(
+            viewLifecycleOwner,
+            Observer(this::networkStatusChange)
+        )
     }
 
     override fun onAttach(context: Context) {
@@ -106,5 +113,14 @@ class DiscoverFragment : Fragment() {
 
     private fun errorMessageChanged(message: String) {
         discover_emptyview_message.text = message
+    }
+
+    private fun networkStatusChange(isNetworkAvailable: Boolean) {
+        discover_search.visibleIf(isNetworkAvailable)
+        discover_ratingbar.visibleIf(isNetworkAvailable)
+
+        discover_no_internet.visibleIf(!isNetworkAvailable)
+        discover_no_internet_image.visibleIf(!isNetworkAvailable)
+
     }
 }

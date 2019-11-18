@@ -7,26 +7,52 @@
     android:orientation="vertical"
     tools:context=".presentation.view.discover.DiscoverFragment">
 
-    <SearchView
-        android:id="@+id/discover_search"
+    <LinearLayout
+        android:id="@+id/discover_header"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:inputType="textCapSentences" />
+        android:layout_margin="15dp"
+        android:gravity="center"
+        android:orientation="vertical">
 
-    <RatingBar
-        android:id="@+id/discover_ratingbar"
-        style="@style/RatingBarStyle"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_below="@id/discover_search"
-        android:layout_centerHorizontal="true"
-        android:stepSize="1" />
+        <SearchView
+            android:id="@+id/discover_search"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:inputType="textCapSentences"
+            android:visibility="gone" />
+
+        <RatingBar
+            android:id="@+id/discover_ratingbar"
+            style="@style/RatingBarStyle"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:stepSize="1"
+            android:visibility="gone" />
+
+        <TextView
+            android:id="@+id/discover_no_internet"
+            style="@style/TextViewStyle.MovieTitle"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/no_internet"
+            android:textSize="24sp"
+            android:visibility="gone" />
+
+        <ImageView
+            android:id="@+id/discover_no_internet_image"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:src="@drawable/ic_cloud_off"
+            android:visibility="gone"/>
+
+    </LinearLayout>
 
     <LinearLayout
         android:id="@+id/discover_content"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_below="@id/discover_ratingbar"
+        android:layout_below="@id/discover_header"
         android:gravity="center_horizontal"
         android:orientation="vertical">
 
@@ -46,14 +72,15 @@
             android:id="@+id/discover_emptyview"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:visibility="gone">
+            android:visibility="gone"
+            android:layout_margin="10dp">
 
             <TextView
                 android:id="@+id/discover_emptyview_message"
-                android:layout_width="wrap_content"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_centerInParent="true"
-                android:layout_gravity="center"
+                android:gravity="center"
                 android:text="@string/discovers_emptyview"
                 android:textColor="@color/yellow"
                 android:textSize="20sp" />

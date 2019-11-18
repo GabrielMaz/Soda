@@ -5,14 +5,17 @@ import androidx.room.Database
 import androidx.room.Room
 import androidx.room.RoomDatabase
 import com.gabrielmaz.soda.data.dao.FavoriteDao
+import com.gabrielmaz.soda.data.dao.GenreDao
 import com.gabrielmaz.soda.data.dao.MovieDao
 import com.gabrielmaz.soda.data.models.Favorite
+import com.gabrielmaz.soda.data.models.Genre
 import com.gabrielmaz.soda.data.models.Movie
 
-@Database(entities = [Movie::class, Favorite::class], version = 5, exportSchema = false)
+@Database(entities = [Movie::class, Favorite::class, Genre::class], version = 6, exportSchema = false)
 abstract class AppDatabase : RoomDatabase() {
     abstract fun movieDao(): MovieDao
     abstract fun favoriteDao(): FavoriteDao
+    abstract fun genreDao(): GenreDao
 
     companion object {
         private val LOG_TAG = AppDatabase::class.java.canonicalName

@@ -5,5 +5,6 @@
     <string name="title_favorites">Favorites</string>
     <string name="discovers_emptyview">No movies found</string>
     <string name="favorites_emptyview">No favorites found</string>
+    <string name="no_internet">You have no internet</string>
 
 </resources>
