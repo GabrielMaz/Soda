@@ -4,6 +4,8 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import com.gabrielmaz.soda.data.controllers.DiscoverController
+import com.gabrielmaz.soda.data.controllers.GenreController
+import com.gabrielmaz.soda.data.dao.GenreDao
 import com.gabrielmaz.soda.data.dao.MovieDao
 import com.gabrielmaz.soda.data.helper.networking.NetworkingManager
 import com.gabrielmaz.soda.data.models.Movie
@@ -15,7 +17,9 @@ class DiscoverViewModel(
     private val discoverController: DiscoverController,
     private val moviesSourceRepository: MoviesSourceRepository,
     private val movieDao: MovieDao,
-    private var networkingManager: NetworkingManager
+    private val networkingManager: NetworkingManager,
+    private val genreDao: GenreDao,
+    private val genreController: GenreController
 ) : ViewModel(), CoroutineScope {
 
     override val coroutineContext: CoroutineContext
@@ -25,6 +29,7 @@ class DiscoverViewModel(
     private val localIsLoading = MutableLiveData<Boolean>()
     private val localIsEmptyList = MutableLiveData<Boolean>()
     private val localErrorMessage = MutableLiveData<String>()
+    private val localIsNetworkAvailable = MutableLiveData<Boolean>()
 
     val movies: LiveData<ArrayList<Movie>>
         get() = localMovies
@@ -34,6 +39,9 @@ class DiscoverViewModel(
         get() = localIsEmptyList
     val errorMessage: LiveData<String>
         get() = localErrorMessage
+    val isNetworkAvailable: LiveData<Boolean>
+        get() = localIsNetworkAvailable
+
 
     fun loadMovies() {
         searchJob?.cancel()
@@ -46,28 +54,38 @@ class DiscoverViewModel(
                 if (networkingManager.isNetworkOnline()) {
                     movieDao.deleteAll()
                     movieDao.insertAll(movies)
-                    // TODO enable search bar
-                } else {
-                    // TODO disable search bar
+                    loadGenres()
                 }
+
+                updateNetworkStatus()
 
                 localMovies.postValue(ArrayList(movies))
                 localIsEmptyList.postValue(movies.isEmpty())
                 localIsLoading.postValue(false)
             } catch (exception: Exception) {
+                updateNetworkStatus()
                 if (exception !is CancellationException) {
                     localIsLoading.postValue(false)
                     localErrorMessage.postValue(exception.message)
                 }
-                // TODO disable search bar in case of network error
             }
         }
+    }
+
+    private fun updateNetworkStatus() {
+        localIsNetworkAvailable.postValue(networkingManager.isNetworkOnline())
+    }
+
+    private suspend fun loadGenres() {
+        val genres = genreController.getGenres()
+        genreDao.deleteAll()
+        genreDao.insertAll(genres)
     }
 
     private var searchJob: Job? = null
 
     fun loadMoviesByName(name: String) {
-        if (name.trim() == "") {
+        if (name.trim() == "" || !networkingManager.isNetworkOnline()) {
             loadMovies()
         } else {
             searchJob?.cancel()
@@ -81,17 +99,21 @@ class DiscoverViewModel(
                     localIsEmptyList.postValue(movies.isEmpty())
                     localIsLoading.postValue(false)
                 } catch (exception: Exception) {
+                    updateNetworkStatus()
                     if (exception !is CancellationException) {
                         localIsLoading.postValue(false)
                         localErrorMessage.postValue(exception.message)
                     }
-                    // TODO disable search bar in case of network error
                 }
             }
         }
     }
 
     fun loadMoviesByRate(stars: Float) {
+        if (!networkingManager.isNetworkOnline()) {
+            loadMovies()
+            return
+        }
         searchJob?.cancel()
         searchJob = launch(Dispatchers.IO) {
             var min: Int = 0
@@ -125,11 +147,11 @@ class DiscoverViewModel(
                 localIsEmptyList.postValue(movies.isEmpty())
                 localIsLoading.postValue(false)
             } catch (exception: Exception) {
+                updateNetworkStatus()
                 if (exception !is CancellationException) {
                     localIsLoading.postValue(false)
                     localErrorMessage.postValue(exception.message)
                 }
-                // TODO disable search bar in case of network error
             }
         }
     }
