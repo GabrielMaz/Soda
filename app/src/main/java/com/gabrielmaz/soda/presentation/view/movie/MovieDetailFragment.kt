@@ -13,6 +13,7 @@ import com.bumptech.glide.Glide
 import com.gabrielmaz.soda.R
 import com.gabrielmaz.soda.data.controllers.RetrofitController
 import com.gabrielmaz.soda.data.models.Movie
+import com.gabrielmaz.soda.data.models.Review
 import kotlinx.android.synthetic.main.fragment_movie_detail.*
 import org.koin.androidx.viewmodel.ext.android.viewModel
 
@@ -38,7 +39,6 @@ class MovieDetailFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        movieDetailViewModel.loadReviews(movie.id)
         movieDetailViewModel.reviews.observe(viewLifecycleOwner, Observer(this::reviewsSize))
         movieDetailViewModel.isFavorite.observe(
             viewLifecycleOwner,
@@ -95,8 +95,8 @@ class MovieDetailFragment : Fragment() {
         )
     }
 
-    private fun reviewsSize(size: Int) {
-        val reviewsText = "Reviews ($size)"
+    private fun reviewsSize(reviews: ArrayList<Review>) {
+        val reviewsText = "Reviews (${reviews.size})"
         movie_reviews.text = reviewsText
     }
 

@@ -52,6 +52,7 @@ var databaseModule = module {
     single { AppDatabase.getInstance(get()).movieDao() }
     single { AppDatabase.getInstance(get()).favoriteDao() }
     single { AppDatabase.getInstance(get()).genreDao() }
+    single { AppDatabase.getInstance(get()).reviewDao() }
 }
 
 var moviesModule = module {
@@ -59,6 +60,6 @@ var moviesModule = module {
     single<MoviesSourceRepository> { MoviesSourceDataRepository(get()) }
 
     viewModel { DiscoverViewModel(get(), get(), get(), get(), get(), get()) }
-    viewModel { MovieDetailViewModel(get(), get()) }
+    viewModel { MovieDetailViewModel(get(), get(), get()) }
     viewModel { ReviewViewModel(get()) }
 }

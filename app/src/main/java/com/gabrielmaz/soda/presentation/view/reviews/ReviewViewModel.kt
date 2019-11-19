@@ -11,7 +11,8 @@ import kotlinx.coroutines.launch
 import java.lang.Exception
 import kotlin.coroutines.CoroutineContext
 
-class ReviewViewModel(private val reviewController: ReviewController) : ViewModel(), CoroutineScope {
+class ReviewViewModel(private val reviewController: ReviewController) : ViewModel(),
+    CoroutineScope {
     override val coroutineContext: CoroutineContext
         get() = Dispatchers.Main
 
@@ -23,8 +24,18 @@ class ReviewViewModel(private val reviewController: ReviewController) : ViewMode
     fun loadReviews(movieId: Int) {
         launch(Dispatchers.IO) {
             try {
-                val reviews = reviewController.getReviews(movieId).results
-                localReviews.postValue(reviews)
+                val reviewResponses = reviewController.getReviews(movieId).results
+
+                val reviews = reviewResponses.map {
+                    Review(
+                        movieId,
+                        it.id,
+                        it.author,
+                        it.content
+                    )
+                }
+
+                localReviews.postValue(ArrayList(reviews))
             } catch (exception: Exception) {
 
             }
